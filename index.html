@@ -6,7 +6,6 @@
   <title>Los Números Enteros</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
 
-  <!-- ══════════════ ESTILOS COMPARTIDOS ══════════════ -->
   <style>
     :root {
       --azul:    #1A3C6E;
@@ -17,15 +16,8 @@
       --blanco:  #FFFFFF;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Open Sans', sans-serif; background: var(--fondo); color: var(--texto); overflow-x: hidden; }
 
-    body {
-      font-family: 'Open Sans', sans-serif;
-      background: var(--fondo);
-      color: var(--texto);
-      overflow-x: hidden;
-    }
-
-    /* ── NAVBAR ── */
     nav {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
       background: var(--azul);
@@ -33,25 +25,17 @@
       padding: 0 2rem; height: 62px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.18);
     }
-    .nav-logo {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      color: var(--blanco); font-size: 1.25rem; letter-spacing: 1px;
-      cursor: pointer;
-    }
+    .nav-logo { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--blanco); font-size: 1.25rem; letter-spacing: 1px; cursor: pointer; }
     .nav-logo span { color: var(--naranja); }
     .nav-links { display: flex; gap: 0.4rem; list-style: none; }
     .nav-links a {
       font-family: 'Nunito', sans-serif; font-weight: 600;
       color: rgba(255,255,255,0.85); text-decoration: none;
       padding: 0.4rem 0.9rem; border-radius: 20px;
-      font-size: 0.9rem; transition: background 0.25s, color 0.25s;
-      cursor: pointer;
+      font-size: 0.9rem; transition: background 0.25s, color 0.25s; cursor: pointer;
     }
-    .nav-links a:hover, .nav-links a.active {
-      background: var(--verde); color: var(--azul);
-    }
+    .nav-links a:hover, .nav-links a.active { background: var(--verde); color: var(--azul); }
 
-    /* ── FOOTER ── */
     footer {
       background: var(--azul); color: rgba(255,255,255,0.7);
       text-align: center; padding: 1.2rem;
@@ -59,139 +43,79 @@
     }
     footer span { color: var(--naranja); font-weight: 700; }
 
-    /* ── PÁGINAS ── */
     .page { display: none; }
-    .page.active { display: block; }
+    .page.active { display: block; animation: fadeIn 0.4s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ── FADE TRANSITION ── */
-    .page.active {
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-
-  <!-- ══════════════ ESTILOS INICIO ══════════════ -->
-  <style id="css-inicio">
-    /* Hero */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       background: linear-gradient(135deg, #0d2448 0%, #1A3C6E 55%, #1a5276 100%);
       display: flex; align-items: center; justify-content: center;
       flex-direction: column; text-align: center;
-      padding: 80px 2rem 3rem;
-      position: relative; overflow: hidden;
+      padding: 80px 2rem 3rem; position: relative; overflow: hidden;
     }
     .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .hero-particles span {
-      position: absolute; border-radius: 50%;
-      background: rgba(46,204,138,0.12);
-      animation: floatBubble linear infinite;
-    }
+    .hero-particles span { position: absolute; animation: floatBubble linear infinite; }
     @keyframes floatBubble {
       0%   { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 0.6; }
+      10%  { opacity: 1; } 90% { opacity: 0.6; }
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
     .hero-badge {
       display: inline-block;
-      background: rgba(244,161,39,0.18);
-      border: 1.5px solid var(--naranja);
-      color: var(--naranja);
-      font-family: 'Nunito', sans-serif; font-weight: 700;
+      background: rgba(244,161,39,0.18); border: 1.5px solid var(--naranja);
+      color: var(--naranja); font-family: 'Nunito', sans-serif; font-weight: 700;
       font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase;
-      padding: 0.35rem 1rem; border-radius: 30px;
-      margin-bottom: 1.4rem;
+      padding: 0.35rem 1rem; border-radius: 30px; margin-bottom: 1.4rem;
     }
-    .hero h1 {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      color: var(--blanco); line-height: 1.12;
-    }
+    .hero h1 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--blanco); line-height: 1.12; }
     .hero h1 .highlight { color: var(--verde); }
-    .hero-sub {
-      font-family: 'Open Sans', sans-serif;
-      color: rgba(255,255,255,0.72); font-size: clamp(1rem, 2.5vw, 1.2rem);
-      max-width: 600px; margin: 1.2rem auto 0;
-    }
+    .hero-sub { font-family: 'Open Sans', sans-serif; color: rgba(255,255,255,0.72); font-size: clamp(1rem, 2.5vw, 1.2rem); max-width: 600px; margin: 1.2rem auto 0; }
     .number-line-wrap { margin: 2.4rem auto 0; }
     .number-line-wrap canvas { display: block; max-width: 100%; }
-    .cta-group {
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      justify-content: center; margin-top: 2.2rem;
-    }
-    .btn {
-      font-family: 'Nunito', sans-serif; font-weight: 700;
-      font-size: 1rem; padding: 0.75rem 1.8rem;
-      border-radius: 30px; border: none; cursor: pointer;
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-    }
+    .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.2rem; }
+    .btn { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; padding: 0.75rem 1.8rem; border-radius: 30px; border: none; cursor: pointer; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
     .btn-primary { background: var(--verde); color: var(--azul); }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid rgba(255,255,255,0.5);
-      color: var(--blanco);
-    }
-    /* Tarjetas de secciones */
-    .sections-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.4rem; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto;
-    }
-    .section-card {
-      background: var(--blanco); border-radius: 16px;
-      padding: 1.8rem 1.4rem; text-align: center;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: default;
-    }
+    .btn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.5); color: var(--blanco); }
+
+    /* ── TARJETAS ── */
+    .sections-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.4rem; padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-card { background: var(--blanco); border-radius: 16px; padding: 1.8rem 1.4rem; text-align: center; box-shadow: 0 4px 18px rgba(0,0,0,0.07); transition: transform 0.2s, box-shadow 0.2s; }
     .section-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); }
     .card-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
-    .card-title {
-      font-family: 'Nunito', sans-serif; font-weight: 900;
-      font-size: 1.05rem; color: var(--azul); margin-bottom: 0.4rem;
-    }
+    .card-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.05rem; color: var(--azul); margin-bottom: 0.4rem; }
     .card-desc { font-size: 0.85rem; color: #666; line-height: 1.5; }
-    /* Dato curioso */
-    .fun-fact {
-      background: linear-gradient(90deg, #1A3C6E, #1a5276);
-      color: var(--blanco); text-align: center;
-      padding: 2.5rem 2rem; margin: 0;
-    }
-    .fun-fact-label {
-      font-family: 'Nunito', sans-serif; font-weight: 700;
-      font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-      color: var(--naranja); margin-bottom: 0.8rem;
-    }
-    .fun-fact p {
-      font-size: clamp(1rem, 2.5vw, 1.15rem);
-      max-width: 700px; margin: 0 auto;
-      color: rgba(255,255,255,0.88); line-height: 1.6;
-    }
+
+    /* ── DATO CURIOSO ── */
+    .fun-fact { background: linear-gradient(90deg, #1A3C6E, #1a5276); color: var(--blanco); text-align: center; padding: 2.5rem 2rem; }
+    .fun-fact-label { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--naranja); margin-bottom: 0.8rem; }
+    .fun-fact p { font-size: clamp(1rem, 2.5vw, 1.15rem); max-width: 700px; margin: 0 auto; color: rgba(255,255,255,0.88); line-height: 1.6; }
+
+    /* ── IFRAME PAGES ── */
+    .iframe-wrapper { padding-top: 62px; height: calc(100vh - 62px - 56px); }
+    .iframe-wrapper iframe { width: 100%; height: 100%; border: none; }
   </style>
 </head>
 
 <body>
 
-<!-- ══════════════════════════════════════════ -->
-<!--              NAVBAR FIJO                   -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--           NAVBAR FIJO              -->
+<!-- ═══════════════════════════════════ -->
 <nav>
   <div class="nav-logo" onclick="showPage('inicio')">ℤ <span>Enteros</span></div>
   <ul class="nav-links">
-    <li><a id="nav-inicio"   onclick="showPage('inicio')"   class="active">Inicio</a></li>
-    <li><a id="nav-teoria"   onclick="showPage('teoria')"            >Teoría</a></li>
-    <li><a id="nav-practica" onclick="showPage('practica')"          >Práctica</a></li>
+    <li><a id="nav-inicio"   onclick="showPage('inicio')"   class="active">🏠 Inicio</a></li>
+    <li><a id="nav-teoria"   onclick="showPage('teoria')"           >📖 Teoría</a></li>
+    <li><a id="nav-practica" onclick="showPage('practica')"         >🎮 Práctica</a></li>
   </ul>
 </nav>
 
-<!-- ══════════════════════════════════════════ -->
-<!--          PÁGINA: INICIO                    -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--         PÁGINA: INICIO             -->
+<!-- ═══════════════════════════════════ -->
 <div id="page-inicio" class="page active">
 
   <section class="hero">
@@ -212,124 +136,79 @@
   </section>
 
   <div class="sections-grid">
-    <div class="section-card">
-      <div class="card-icon">🧠</div>
-      <div class="card-title">Comprender</div>
-      <div class="card-desc">Concepto, recta numérica y valor absoluto con explicaciones claras.</div>
-    </div>
-    <div class="section-card">
-      <div class="card-icon">✏️</div>
-      <div class="card-title">Aplicar</div>
-      <div class="card-desc">Actividades interactivas con Genially y Liveworksheets para ejercitar.</div>
-    </div>
-    <div class="section-card">
-      <div class="card-icon">📊</div>
-      <div class="card-title">Evaluar</div>
-      <div class="card-desc">Quiz cronometrado con retroalimentación inmediata y puntaje.</div>
-    </div>
-    <div class="section-card">
-      <div class="card-icon">🌍</div>
-      <div class="card-title">Contextualizar</div>
-      <div class="card-desc">Finanzas, temperaturas y altitudes: los enteros en tu día a día.</div>
-    </div>
-    <div class="section-card">
-      <div class="card-icon">🚀</div>
-      <div class="card-title">Ampliar</div>
-      <div class="card-desc">Videos, GeoGebra y Kahoot para ampliar y repasar cuando quieras.</div>
-    </div>
+    <div class="section-card"><div class="card-icon">🧠</div><div class="card-title">Comprender</div><div class="card-desc">Concepto, recta numérica y valor absoluto con explicaciones claras.</div></div>
+    <div class="section-card"><div class="card-icon">✏️</div><div class="card-title">Aplicar</div><div class="card-desc">Actividades interactivas con Genially y Liveworksheets para ejercitar.</div></div>
+    <div class="section-card"><div class="card-icon">📊</div><div class="card-title">Evaluar</div><div class="card-desc">Quiz cronometrado con retroalimentación inmediata y puntaje.</div></div>
+    <div class="section-card"><div class="card-icon">🌍</div><div class="card-title">Contextualizar</div><div class="card-desc">Finanzas, temperaturas y altitudes: los enteros en tu día a día.</div></div>
+    <div class="section-card"><div class="card-icon">🚀</div><div class="card-title">Ampliar</div><div class="card-desc">Videos, GeoGebra y Kahoot para ampliar y repasar cuando quieras.</div></div>
   </div>
 
   <div class="fun-fact">
     <div class="fun-fact-label">💡 Dato curioso</div>
-    <p>Los números negativos se usaron por primera vez en la China antigua hace más de 2.000 años
-       para registrar deudas. ¡Ya los usabas sin saberlo!</p>
+    <p>Los números negativos se usaron por primera vez en la China antigua hace más de 2.000 años para registrar deudas. ¡Ya los usabas sin saberlo!</p>
   </div>
 
-</div><!-- /page-inicio -->
+</div>
 
-
-<!-- ══════════════════════════════════════════ -->
-<!--          PÁGINA: TEORÍA (iframe)           -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--         PÁGINA: TEORÍA             -->
+<!--   Abre: teoria-2.html              -->
+<!-- ═══════════════════════════════════ -->
 <div id="page-teoria" class="page">
-  <div style="padding-top:62px; height:calc(100vh - 62px - 56px);">
+  <div class="iframe-wrapper">
     <iframe id="iframe-teoria"
             src=""
             data-src="teoria-2.html"
-            style="width:100%; height:100%; border:none;"
             title="Teoría – Los Números Enteros">
     </iframe>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════ -->
-<!--          PÁGINA: PRÁCTICA (iframe)         -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--         PÁGINA: PRÁCTICA           -->
+<!--   Abre: practica-3.html            -->
+<!-- ═══════════════════════════════════ -->
 <div id="page-practica" class="page">
-  <div style="padding-top:62px; height:calc(100vh - 62px - 56px);">
+  <div class="iframe-wrapper">
     <iframe id="iframe-practica"
             src=""
             data-src="practica-3.html"
-            style="width:100%; height:100%; border:none;"
             title="Práctica – Los Números Enteros">
     </iframe>
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════ -->
-<!--              FOOTER FIJO                   -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--           FOOTER FIJO              -->
+<!-- ═══════════════════════════════════ -->
 <footer>
   Diseñado con ❤️ para estudiantes de <span>Grado 7°</span> · Los Números Enteros · ℤ
 </footer>
 
-
-<!-- ══════════════════════════════════════════ -->
-<!--              JAVASCRIPT SPA                -->
-<!-- ══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!--         JAVASCRIPT                 -->
+<!-- ═══════════════════════════════════ -->
 <script>
-  // ── Navegación entre páginas ──────────────────
+  /* ── Cambiar entre páginas ── */
   function showPage(id) {
-    // Ocultar todas las páginas
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // Desactivar todos los nav links
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-
-    // Mostrar la página seleccionada
     document.getElementById('page-' + id).classList.add('active');
-    // Activar el nav link correspondiente
     const navLink = document.getElementById('nav-' + id);
     if (navLink) navLink.classList.add('active');
 
-    // Cargar iframe solo la primera vez (lazy load)
+    /* Cargar el iframe solo la primera vez */
     const iframe = document.getElementById('iframe-' + id);
     if (iframe && !iframe.src) {
       iframe.src = iframe.dataset.src;
     }
 
-    // Scroll al inicio
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Re-inicializar JS de inicio si se vuelve a esa página
-    if (id === 'inicio') {
-      initInicio();
-    }
+    if (id === 'inicio') initInicio();
   }
 
-  // ── Leer parámetro ?page=xxx en la URL ────────
-  (function checkURLParam() {
-    const params = new URLSearchParams(window.location.search);
-    const page = params.get('page');
-    if (page === 'teoria' || page === 'practica') {
-      showPage(page);
-    }
-  })();
-
-  // ── Partículas y recta numérica (Inicio) ──────
+  /* ── Partículas flotantes ── */
   function initInicio() {
-    // Partículas
     const container = document.getElementById('particles');
     if (container && container.children.length === 0) {
       const symbols = ['-3','+2','0','-1','+5','|n|','ℤ','-7','+4','−2'];
@@ -342,52 +221,37 @@
           animation-duration:${Math.random()*12+8}s;
           animation-delay:${Math.random()*-15}s;
           font-size:${size*0.4}px;
+          position:absolute;
           display:flex; align-items:center; justify-content:center;
           color:rgba(46,204,138,0.25);
           font-family:'Nunito',sans-serif; font-weight:900;
-          background:none; border-radius:0;
         `;
         span.textContent = symbols[i % symbols.length];
         container.appendChild(span);
       }
     }
 
-    // Recta numérica animada
+    /* ── Recta numérica ── */
     const canvas = document.getElementById('numberLine');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
     const nums = [-5,-4,-3,-2,-1,0,1,2,3,4,5];
-    const cx = W/2, cy = H/2, step = W / (nums.length + 1);
+    const cy = H / 2, step = W / (nums.length + 1);
+    ctx.clearRect(0, 0, W, H);
 
-    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(step*0.5, cy); ctx.lineTo(W-step*0.5, cy); ctx.stroke();
 
-    // Línea
-    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(step*0.5, cy);
-    ctx.lineTo(W - step*0.5, cy);
-    ctx.stroke();
-
-    // Flechas
     ctx.fillStyle = 'rgba(255,255,255,0.4)';
     [[step*0.5,cy,-1],[W-step*0.5,cy,1]].forEach(([x,y,dir]) => {
-      ctx.beginPath();
-      ctx.moveTo(x,y);
-      ctx.lineTo(x-dir*12,y-6);
-      ctx.lineTo(x-dir*12,y+6);
-      ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x-dir*12,y-6); ctx.lineTo(x-dir*12,y+6); ctx.fill();
     });
 
-    // Puntos y etiquetas
     nums.forEach((n, i) => {
       const x = step * (i + 1);
-      const color = n < 0 ? '#F4A127' : n === 0 ? '#2ECC8A' : '#64B5F6';
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(x, cy, n === 0 ? 7 : 5, 0, Math.PI*2);
-      ctx.fill();
+      ctx.fillStyle = n < 0 ? '#F4A127' : n === 0 ? '#2ECC8A' : '#64B5F6';
+      ctx.beginPath(); ctx.arc(x, cy, n === 0 ? 7 : 5, 0, Math.PI*2); ctx.fill();
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
       ctx.font = `bold ${n===0?14:12}px Nunito, sans-serif`;
       ctx.textAlign = 'center';
@@ -395,7 +259,6 @@
     });
   }
 
-  // Inicializar al cargar
   window.addEventListener('load', initInicio);
 </script>
 
