@@ -12,7 +12,14 @@
       --fondo: #F9F9F6; --texto: #2D2D2D; --blanco: #FFFFFF;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Open Sans', sans-serif; background: var(--fondo); color: var(--texto); overflow-x: hidden; }
+    
+    /* El body oculta la barra de scroll externa porque los iframes tendrán la suya */
+    body { 
+      font-family: 'Open Sans', sans-serif; 
+      background: var(--fondo); 
+      color: var(--texto); 
+      overflow: hidden; 
+    }
 
     /* NAVBAR FIJO */
     nav {
@@ -31,23 +38,32 @@
 
     /* FOOTER FIJO */
     footer {
+      position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;
       background: var(--azul); color: rgba(255,255,255,0.7); text-align: center;
-      padding: 1.2rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem;
+      padding: 10px; font-family: 'Nunito', sans-serif; font-size: 0.85rem; height: 40px;
     }
     footer span { color: var(--naranja); font-weight: 700; }
 
     /* PAGINAS */
     .page { display: none; }
     .page.active { display: block; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* CONTENEDOR DE VENTANAS INTERNAS (IFRAMES) */
     .iframe-container {
-      padding-top: 62px; 
-      height: calc(100vh - 56px); /* 100% pantalla menos altura del footer */
+      position: absolute;
+      top: 62px; /* Empieza exactamente debajo del navbar */
+      bottom: 40px; /* Termina exactamente encima del footer */
+      left: 0;
+      right: 0;
       width: 100%;
     }
-    .iframe-container iframe { width: 100%; height: 100%; border: none; display: block; }
+    .iframe-container iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; 
+      display: block; 
+    }
   </style>
 </head>
 
@@ -65,7 +81,6 @@
 <!-- PÁGINA 1: INICIO -->
 <div id="page-inicio" class="page active">
   <div class="iframe-container">
-    <!-- ATENCIÓN: Asegúrate de que el nombre del archivo de inicio sea correcto aquí -->
     <iframe src="./inicio_numeros_enteros.html" title="Inicio"></iframe>
   </div>
 </div>
@@ -73,15 +88,13 @@
 <!-- PÁGINA 2: TEORÍA -->
 <div id="page-teoria" class="page">
   <div class="iframe-container">
-    <!-- ATENCIÓN: Asegúrate de que el nombre del archivo de teoría sea correcto aquí -->
-    <iframe src="./teoria-2.html" title="Teoría"></iframe>
+    <iframe src="./teoria-2-2.html" title="Teoría"></iframe>
   </div>
 </div>
 
 <!-- PÁGINA 3: PRÁCTICA -->
 <div id="page-practica" class="page">
   <div class="iframe-container">
-    <!-- ATENCIÓN: Asegúrate de que el nombre del archivo de práctica sea correcto aquí -->
     <iframe src="./practica-3.html" title="Práctica"></iframe>
   </div>
 </div>
@@ -92,11 +105,8 @@
 
 <script>
   function showPage(id) {
-    // Ocultar todas
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    
-    // Mostrar la elegida
     document.getElementById('page-' + id).classList.add('active');
     document.getElementById('nav-' + id).classList.add('active');
   }
