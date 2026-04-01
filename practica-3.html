@@ -224,6 +224,52 @@
       .ejercicio-row{grid-template-columns:1fr;text-align:center;}
       .ej-input{width:100%;}
     }
+  
+    /* ===== ESTILOS DEL QUIZ MEJORADOS ===== */
+    .opt-btn {
+      transition: all 0.2s ease !important;
+    }
+
+    .opt-btn:hover {
+      background: #e2e8f0 !important;
+    }
+
+    /* ESTADO SELECCIONADO (COLOR PREDOMINANTE FÁCIL DE VER) */
+    .opt-btn.selected {
+      background: rgba(26, 60, 110, 0.08) !important; /* Azul claro de fondo */
+      border: 2px solid var(--azul) !important;       /* Borde azul fuerte */
+      color: var(--azul) !important;                  /* Texto azul fuerte */
+      box-shadow: 0 4px 12px rgba(26, 60, 110, 0.15) !important;
+    }
+
+    .opt-btn.selected .opt-letter {
+      background: var(--azul) !important;             /* Círculo azul sólido */
+      color: var(--blanco) !important;                /* Letra blanca */
+      box-shadow: 0 2px 8px rgba(26, 60, 110, 0.3) !important;
+    }
+
+    /* Estados de validación (Correcto) */
+    .opt-btn.correct {
+      background: rgba(46, 204, 138, 0.15) !important;
+      border-color: var(--verde) !important;
+      color: #1a8c5e !important;
+    }
+    .opt-btn.correct .opt-letter { 
+      background: var(--verde) !important; 
+      color: white !important; 
+    }
+
+    /* Estados de validación (Incorrecto) */
+    .opt-btn.incorrect {
+      background: rgba(244, 161, 39, 0.15) !important;
+      border-color: var(--naranja) !important;
+      color: #b87000 !important;
+    }
+    .opt-btn.incorrect .opt-letter { 
+      background: var(--naranja) !important; 
+      color: white !important; 
+    }
+
   </style>
 </head>
 <body>
@@ -237,7 +283,7 @@
   <div class="progress-steps">
     <div class="step-pill done">✅ Teoría vista</div>
     <div class="step-pill active">🎮 Practicando</div>
-    <div class="step-pill">📝 Evaluación</div>
+    
   </div>
 </div>
 
@@ -276,7 +322,7 @@
           </div>
         </div>
         <p class="tool-desc">Compite con tus compañeros en este Kahoot sobre operaciones con números enteros. Suma, resta y ley de signos en formato de juego con temporizador.</p>
-        <a href="https://create.kahoot.it/share/operaciones-con-numeros-enteros/67c38637-c032-4248-ac83-77194fe39e02"
+        <a href="https://kahoot.it/solo?quizId=67c38637-c032-4248-ac83-77194fe39e02"
            target="_blank" rel="noopener" class="btn-tool btn-kahoot">
           🎮 Jugar en Kahoot!
         </a>
@@ -532,8 +578,11 @@ document.querySelectorAll('.options').forEach(group=>{
     btn.addEventListener('click',()=>{
       if(quizDone) return;
       const q=parseInt(group.dataset.q);
-      group.querySelectorAll('.opt-btn').forEach(b=>b.style.background='');
-      btn.style.background='rgba(26,60,110,.12)';
+      group.querySelectorAll('.opt-btn').forEach(b=>{
+        b.style.background='';
+        b.classList.remove('selected');
+      });
+      btn.classList.add('selected');
       quizSelected[q]=btn.dataset.val;
     });
   });
