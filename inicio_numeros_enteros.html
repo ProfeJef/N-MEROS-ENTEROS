@@ -28,7 +28,7 @@
 
     /* HERO */
     .hero { min-height: 100vh; background: linear-gradient(135deg, #0d2448 0%, #1A3C6E 55%, #1a5276 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 80px 2rem 3rem; position: relative; overflow: hidden; }
-    
+
     /* partículas de fondo */
     .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
     .hero-particles span { position: absolute; border-radius: 50%; background: rgba(46,204,138,0.12); animation: floatBubble linear infinite; }
@@ -102,7 +102,7 @@
     <div class="hero-badge">Matemáticas | Grado 7</div>
     <h1>Los <span class="highlight">Números<br>Enteros</span></h1>
     <p class="hero-sub">¡Descubre el mundo de los números positivos, negativos y el cero. Aprende con teoría, juegos y situaciones de la vida real!</p>
-    
+
     <!-- Recta numérica animada en Canvas -->
     <div class="number-line-wrap">
       <canvas id="numberLine" width="700" height="100"></canvas>
@@ -140,7 +140,7 @@
         <p>Quiz cronometrado con retroalimentación inmediata y puntaje.</p>
         <span class="card-tag">Evaluar</span>
       </div>
-      <div class="card" data-delay="300" onclick="window.open('https://www.youtube.com/watch?v=_S0xO3y39S0', '_blank')" style="cursor: pointer;" title="Ver cómo se usan en la vida real">
+      <div class="card" data-delay="300" onclick="window.open('vida_real.html', '_blank')" style="cursor: pointer;" title="Abrir interactivos de la vida real">
         <div class="card-icon">🌍</div>
         <h3>Vida Real</h3>
         <p>Finanzas, temperaturas y altitudes: los enteros en tu día a día.</p>
@@ -204,7 +204,7 @@
 
       function draw(timestamp) {
         ctx.clearRect(0, 0, W, H);
-        
+
         // línea principal
         ctx.strokeStyle = 'rgba(255,255,255,0.35)';
         ctx.lineWidth = 2;
