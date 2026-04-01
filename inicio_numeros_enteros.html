@@ -215,16 +215,7 @@
 <body>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">ℤ <span>Enteros</span></div>
-  <ul class="nav-links">
-    <li><a href="#inicio" class="active">Inicio</a></li>
-    <li><a href="#teoria">Teoría</a></li>
-    <li><a href="#practica">Práctica</a></li>
-    <li><a href="#evaluacion">Evaluación</a></li>
-    <li><a href="#recursos">Recursos</a></li>
-  </ul>
-</nav>
+
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -298,9 +289,7 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
-  Diseñado con ❤️ para estudiantes de <span>Grado 7°</span> · Los Números Enteros · ℤ
-</footer>
+
 
 <script>
 // ──────────────────────────────────────────
@@ -479,5 +468,32 @@ rippleStyle.textContent = `
 `;
 document.head.appendChild(rippleStyle);
 </script>
+
+<script>
+// Hacer que los botones dentro del iframe hablen con el index (parent)
+document.addEventListener('DOMContentLoaded', () => {
+  const btnTeoria = document.querySelector('.btn-primary');
+  const btnPractica = document.querySelector('.btn-outline');
+
+  if(btnTeoria) {
+    btnTeoria.onclick = function(e) {
+      e.preventDefault();
+      if(window.parent && window.parent.showPage) {
+        window.parent.showPage('teoria');
+      }
+    };
+  }
+
+  if(btnPractica) {
+    btnPractica.onclick = function(e) {
+      e.preventDefault();
+      if(window.parent && window.parent.showPage) {
+        window.parent.showPage('practica');
+      }
+    };
+  }
+});
+</script>
+
 </body>
 </html>
