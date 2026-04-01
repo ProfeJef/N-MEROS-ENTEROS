@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evaluación – Los Números Enteros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --azul:    #1A3C6E;
+      --verde:   #2ECC8A;
+      --naranja: #F4A127;
+      --fondo:   #F9F9F6;
+      --texto:   #2D2D2D;
+      --blanco:  #FFFFFF;
+      --gris:    #f0f2f5;
+      --rojo:    #E74C3C;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { 
+      font-family:'Open Sans',sans-serif; 
+      background:var(--fondo); 
+      color:var(--texto); 
+      padding: 2rem;
+      padding-bottom: 5rem;
+    }
+
+    /* HEADER */
+    .eval-header {
+      background: linear-gradient(135deg, #12284C, var(--azul));
+      color: var(--blanco);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .eval-title h1 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .eval-title p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+    }
+    .score-display {
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+    .score-display h3 {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--verde);
+    }
+    .score-display .points {
+      font-size: 2rem;
+      font-weight: 900;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    /* CONTENEDOR DE PREGUNTAS */
+    #quiz-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .category-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      color: var(--azul);
+      margin: 2rem 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid var(--naranja);
+      display: inline-block;
+    }
+
+    .question-block {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--azul);
+    }
+
+    .q-text {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--azul);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .q-num {
+      background: var(--naranja);
+      color: var(--blanco);
+      padding: 0.2rem 0.6rem;
+      border-radius: 8px;
+      margin-right: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* OPCIONES ESTILOS (COPIADOS DE PRÁCTICA) */
+    .options { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .opt-btn {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--gris); border: 2px solid transparent;
+      border-radius: 10px; padding: 0.8rem 1.2rem;
+      font-family: 'Open Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+      color: #444; cursor: pointer; text-align: left;
+      transition: all 0.2s ease !important;
+    }
+    .opt-btn:hover {
+      background: #e2e8f0 !important;
+      transform: translateX(4px);
+    }
+    .opt-letter {
+      background: #dfe3e8; color: #666;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.9rem; flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    /* ESTADO SELECCIONADO */
+    .opt-btn.selected {
+      background: rgba(26, 60, 110, 0.08) !important;
+      border: 2px solid var(--azul) !important;
+      color: var(--azul) !important;
+      box-shadow: 0 4px 12px rgba(26, 60, 110, 0.15) !important;
+    }
+    .opt-btn.selected .opt-letter {
+      background: var(--azul) !important;
+      color: var(--blanco) !important;
+      box-shadow: 0 2px 8px rgba(26, 60, 110, 0.3) !important;
+    }
+
+    /* VALIDACIÓN */
+    .opt-btn.correct {
+      background: rgba(46, 204, 138, 0.15) !important;
+      border-color: var(--verde) !important;
+      color: #1a8c5e !important;
+      pointer-events: none;
+    }
+    .opt-btn.correct .opt-letter { background: var(--verde) !important; color: white !important; }
+
+    .opt-btn.incorrect {
+      background: rgba(231, 76, 60, 0.15) !important;
+      border-color: var(--rojo) !important;
+      color: #c0392b !important;
+      pointer-events: none;
+    }
+    .opt-btn.incorrect .opt-letter { background: var(--rojo) !important; color: white !important; }
+
+    .opt-btn.disabled { pointer-events: none; opacity: 0.7; }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+      animation: fadeIn 0.4s;
+    }
+    .feedback.show { display: block; }
+    .feedback.success { background: rgba(46, 204, 138, 0.15); color: #1a8c5e; border-left: 4px solid var(--verde); }
+    .feedback.error { background: rgba(231, 76, 60, 0.15); color: #c0392b; border-left: 4px solid var(--rojo); }
+
+    /* BOTONES ACCIÓN */
+    .action-bar {
+      text-align: center;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .btn-main {
+      background: var(--verde); color: var(--azul);
+      border: none; padding: 1rem 3rem; border-radius: 30px;
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.2rem;
+      cursor: pointer; box-shadow: 0 6px 20px rgba(46,204,138,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-main:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(46,204,138,0.5); }
+    .btn-main:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; color: #888; transform: none; }
+
+    .btn-secondary {
+      background: var(--azul); color: var(--blanco);
+      border: none; padding: 1rem 2rem; border-radius: 30px;
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1rem;
+      cursor: pointer; display: none;
+    }
+
+    /* MODAL RESULTADO */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center;
+      z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-content {
+      background: var(--blanco); padding: 3rem 2rem; border-radius: 20px;
+      text-align: center; max-width: 400px; width: 90%;
+      transform: translateY(20px); transition: transform 0.3s;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .modal-title { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--azul); font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .modal-score { font-size: 3rem; font-weight: 900; color: var(--naranja); margin: 1rem 0; font-family: 'Nunito', sans-serif; }
+    .modal-text { color: #555; margin-bottom: 2rem; line-height: 1.5; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media(max-width: 768px){
+      body { padding: 1rem; }
+      .eval-header { padding: 1.5rem; text-align: center; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="eval-header">
+    <div class="eval-title">
+      <h1>📝 Evaluación Final</h1>
+      <p>10 preguntas generadas al azar. Selecciona la respuesta correcta y dale a "Calificar".</p>
+    </div>
+    <div class="score-display">
+      <h3>Nota Final</h3>
+      <div class="points" id="top-score">- / 10</div>
+    </div>
+  </div>
+
+  <div id="quiz-container">
+    <!-- El JS inyectará las preguntas aquí -->
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-main" id="btn-calificar">Calificar Evaluación</button>
+    <button class="btn-secondary" id="btn-reintentar" onclick="location.reload()">↻ Generar nueva evaluación</button>
+  </div>
+
+  <!-- MODAL DE RESULTADOS -->
+  <div class="modal-overlay" id="result-modal">
+    <div class="modal-content">
+      <div class="modal-icon" id="m-icon">🏆</div>
+      <h2 class="modal-title" id="m-title">¡Evaluación Completada!</h2>
+      <div class="modal-score" id="m-score">10/10</div>
+      <p class="modal-text" id="m-text">¡Excelente trabajo! Dominas los números enteros a la perfección.</p>
+      <button class="btn-main" onclick="document.getElementById('result-modal').classList.remove('active')">Ver Correcciones</button>
+    </div>
+  </div>
+
+<script>
+/* =========================================================================
+   BANCO DE PREGUNTAS (Se escogerán aleatoriamente: 2 Conceptos, 4 Ejercicios, 4 Problemas)
+   ========================================================================= */
+
+const bankConceptuales = [
+  {
+    q: "¿Cuál de los siguientes conjuntos representa correctamente los números enteros (ℤ)?",
+    opts: [
+      { text: "Positivos, negativos y el cero", correct: true },
+      { text: "Solo los números positivos y el cero", correct: false },
+      { text: "Solo los números negativos y el cero", correct: false },
+      { text: "Cualquier número, incluyendo decimales y fracciones", correct: false }
+    ],
+    feed: "Los números enteros incluyen a los naturales (positivos), sus opuestos (negativos) y el cero."
+  },
+  {
+    q: "El valor absoluto de un número entero es siempre:",
+    opts: [
+      { text: "Positivo o cero", correct: true },
+      { text: "Negativo", correct: false },
+      { text: "El mismo número pero con signo contrario", correct: false },
+      { text: "Cero", correct: false }
+    ],
+    feed: "El valor absoluto mide la distancia al cero, y las distancias nunca son negativas. |−5| = 5."
+  },
+  {
+    q: "¿Qué afirmación sobre la recta numérica es VERDADERA?",
+    opts: [
+      { text: "Cualquier número a la derecha es mayor que uno a la izquierda", correct: true },
+      { text: "El número −10 es mayor que el número −2", correct: false },
+      { text: "El cero es menor que cualquier número negativo", correct: false },
+      { text: "Los números negativos crecen hacia la izquierda", correct: false }
+    ],
+    feed: "En la recta numérica, el valor siempre aumenta de izquierda a derecha. Por eso −2 es mayor que −10."
+  },
+  {
+    q: "¿Cuál es el opuesto del número −15?",
+    opts: [
+      { text: "+15", correct: true },
+      { text: "−15", correct: false },
+      { text: "0", correct: false },
+      { text: "1", correct: false }
+    ],
+    feed: "El opuesto de un número es el mismo número con signo contrario, ubicado a la misma distancia del cero."
+  },
+  {
+    q: "Si dos números enteros son negativos, ¿cuál de ellos es el mayor?",
+    opts: [
+      { text: "El que está más cerca del cero (menor valor absoluto)", correct: true },
+      { text: "El que está más lejos del cero (mayor valor absoluto)", correct: false },
+      { text: "Siempre son iguales", correct: false },
+      { text: "No se pueden comparar", correct: false }
+    ],
+    feed: "Entre dos negativos, es mayor el que debe menos o el que está menos profundo (más cerca al 0). Ej: −2 > −8."
+  }
+];
+
+const bankEjercicios = [
+  { q: "Resuelve: (−8) + (−4)", opts: [{text:"−12", correct:true}, {text:"−4", correct:false}, {text:"+12", correct:false}, {text:"+4", correct:false}], feed: "Mismo signo: se suman (8+4=12) y se mantiene el signo negativo." },
+  { q: "Calcula: (+15) + (−7)", opts: [{text:"+8", correct:true}, {text:"−8", correct:false}, {text:"+22", correct:false}, {text:"−22", correct:false}], feed: "Signos distintos: se restan (15−7=8) y se pone el signo del mayor absoluto (+)." },
+  { q: "Efectúa la resta: (−5) − (−12)", opts: [{text:"+7", correct:true}, {text:"−17", correct:false}, {text:"−7", correct:false}, {text:"+17", correct:false}], feed: "Restar es sumar el opuesto: (−5) + (+12) = +7." },
+  { q: "¿Cuánto es: (+3) − (+10)?", opts: [{text:"−7", correct:true}, {text:"+7", correct:false}, {text:"+13", correct:false}, {text:"−13", correct:false}], feed: "(+3) + (−10). Signos distintos, se restan y gana el negativo: −7." },
+  { q: "Calcula: |−6| + |−4|", opts: [{text:"10", correct:true}, {text:"−10", correct:false}, {text:"2", correct:false}, {text:"−2", correct:false}], feed: "El valor absoluto los vuelve positivos: 6 + 4 = 10." },
+  { q: "Resuelve la siguiente operación combinada: (−2) + (+9) − (+4)", opts: [{text:"+3", correct:true}, {text:"+11", correct:false}, {text:"−7", correct:false}, {text:"+15", correct:false}], feed: "De izquierda a derecha: (−2) + (+9) = +7. Luego (+7) − (+4) = +3." },
+  { q: "¿Qué número sumado a −5 da como resultado +2?", opts: [{text:"+7", correct:true}, {text:"−7", correct:false}, {text:"+3", correct:false}, {text:"−3", correct:false}], feed: "Si a 7 le quitas 5, te quedan 2 positivos. (−5) + (+7) = +2." },
+  { q: "Efectúa: 0 − (−8)", opts: [{text:"+8", correct:true}, {text:"−8", correct:false}, {text:"0", correct:false}, {text:"Error", correct:false}], feed: "Restar un negativo equivale a sumar un positivo: 0 + (+8) = 8." }
+];
+
+const bankProblemas = [
+  {
+    q: "La temperatura en Bogotá era de −2°C en la madrugada. Al mediodía la temperatura subió 15°C. ¿Cuál es la temperatura al mediodía?",
+    opts: [{text:"+13°C", correct:true}, {text:"+17°C", correct:false}, {text:"−13°C", correct:false}, {text:"−17°C", correct:false}],
+    feed: "Subir es sumar: (−2) + (+15). Gana el positivo, la diferencia es 13."
+  },
+  {
+    q: "Un buzo está explorando a −30 metros respecto al nivel del mar. Si desciende 15 metros más, ¿a qué profundidad se encuentra ahora?",
+    opts: [{text:"−45 m", correct:true}, {text:"−15 m", correct:false}, {text:"+15 m", correct:false}, {text:"+45 m", correct:false}],
+    feed: "Descender es negativo: (−30) + (−15) = −45 metros."
+  },
+  {
+    q: "Sofía revisa su cuenta bancaria y tiene un saldo de −$25.000. Si ella hace un abono (consignación) de $10.000, ¿cuál es su saldo actual?",
+    opts: [{text:"−$15.000", correct:true}, {text:"+$15.000", correct:false}, {text:"−$35.000", correct:false}, {text:"+$35.000", correct:false}],
+    feed: "Debe 25 mil y paga 10 mil. (−25.000) + (+10.000) = −15.000 (Aún debe)."
+  },
+  {
+    q: "Un ascensor se encuentra en el sótano 3 (piso −3). Si sube 8 pisos, ¿en qué piso se detiene?",
+    opts: [{text:"Piso 5", correct:true}, {text:"Piso 11", correct:false}, {text:"Piso 4", correct:false}, {text:"Sótano 11", correct:false}],
+    feed: "(−3) + (+8). Se restan los valores y gana el positivo: +5."
+  },
+  {
+    q: "Un gran matemático nació en el año 570 a.C. y murió en el año 495 a.C. ¿Cuántos años vivió?",
+    opts: [{text:"75 años", correct:true}, {text:"65 años", correct:false}, {text:"1065 años", correct:false}, {text:"85 años", correct:false}],
+    feed: "Para hallar el tiempo vivido se resta nacimiento de muerte: (−495) − (−570) = (−495) + (+570) = +75."
+  },
+  {
+    q: "En un juego de mesa, Carlos avanza 4 casillas, luego cae en una trampa y retrocede 6 casillas, y finalmente saca una carta que lo hace avanzar 5 casillas. ¿A cuántas casillas del inicio quedó?",
+    opts: [{text:"A 3 casillas", correct:true}, {text:"A 5 casillas", correct:false}, {text:"A 15 casillas", correct:false}, {text:"A −1 casillas", correct:false}],
+    feed: "(+4) + (−6) + (+5) = (−2) + (+5) = +3."
+  },
+  {
+    q: "La cima de una montaña está a +4.000 m y el fondo de un lago cercano está a −1.500 m. ¿Cuál es la diferencia total de altitud entre ambos puntos?",
+    opts: [{text:"5.500 m", correct:true}, {text:"2.500 m", correct:false}, {text:"−2.500 m", correct:false}, {text:"3.500 m", correct:false}],
+    feed: "Diferencia es resta: (+4.000) − (−1.500) = (+4.000) + (+1.500) = 5.500 metros."
+  },
+  {
+    q: "Una cámara frigorífica se encuentra a 4°C. Si su temperatura baja 2°C cada hora, ¿qué temperatura tendrá exactamente al cabo de 3 horas?",
+    opts: [{text:"−2°C", correct:true}, {text:"−6°C", correct:false}, {text:"+2°C", correct:false}, {text:"0°C", correct:false}],
+    feed: "Baja 2°C por 3 horas = baja 6°C.  (+4) − 6 = −2°C."
+  }
+];
+
+/* Utilidad para mezclar arreglos (Fisher-Yates) */
+function shuffleArray(arr) {
+  let array = [...arr];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Estado del quiz
+let finalQuestions = [];
+let userAnswers = {};
+let quizDone = false;
+
+function initQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  userAnswers = {};
+  quizDone = false;
+  document.getElementById('top-score').textContent = "- / 10";
+  document.getElementById('btn-calificar').style.display = 'inline-block';
+  document.getElementById('btn-calificar').textContent = "Calificar Evaluación";
+  document.getElementById('btn-reintentar').style.display = 'none';
+
+  // 1. Seleccionar aleatoriamente: 2 Conceptos, 4 Ejercicios, 4 Problemas
+  const qConceptos = shuffleArray(bankConceptuales).slice(0, 2);
+  const qEjercicios = shuffleArray(bankEjercicios).slice(0, 4);
+  const qProblemas = shuffleArray(bankProblemas).slice(0, 4);
+
+  finalQuestions = [
+    { category: "🧠 Conceptos Básicos", items: qConceptos },
+    { category: "🧮 Ejercicios de Operaciones", items: qEjercicios },
+    { category: "🌍 Problemas de la Vida Real", items: qProblemas }
+  ];
+
+  let globalQuestionIndex = 1;
+
+  // 2. Renderizar el HTML
+  finalQuestions.forEach(section => {
+    let sectionHTML = `<h2 class="category-title">${section.category}</h2>`;
+
+    section.items.forEach(qItem => {
+      // Mezclar opciones para que la correcta no siempre sea la A
+      let shuffledOpts = shuffleArray(qItem.opts);
+      // Guardamos el índice correcto para esta pregunta específica
+      let correctIndex = shuffledOpts.findIndex(o => o.correct);
+      qItem.correctLetter = String.fromCharCode(97 + correctIndex); // 'a', 'b', 'c', 'd'
+
+      let optionsHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      shuffledOpts.forEach((opt, idx) => {
+        let valLetter = String.fromCharCode(97 + idx);
+        optionsHTML += `
+          <button class="opt-btn" data-val="${valLetter}">
+            <span class="opt-letter">${letters[idx]}</span>
+            <span>${opt.text}</span>
+          </button>
+        `;
+      });
+
+      sectionHTML += `
+        <div class="question-block" data-q="${globalQuestionIndex}" data-ans="${qItem.correctLetter}">
+          <p class="q-text"><span class="q-num">${globalQuestionIndex}</span> ${qItem.q}</p>
+          <div class="options">
+            ${optionsHTML}
+          </div>
+          <div class="feedback" id="feed-${globalQuestionIndex}">${qItem.feed}</div>
+        </div>
+      `;
+      globalQuestionIndex++;
+    });
+
+    container.innerHTML += sectionHTML;
+  });
+
+  attachEvents();
+}
+
+function attachEvents() {
+  document.querySelectorAll('.question-block').forEach(block => {
+    const qNum = block.dataset.q;
+    block.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(quizDone) return;
+
+        // Limpiar selecciones previas de esta pregunta
+        block.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+
+        // Marcar la nueva selección
+        btn.classList.add('selected');
+        userAnswers[qNum] = btn.dataset.val;
+
+        checkAllAnswered();
+      });
+    });
+  });
+
+  document.getElementById('btn-calificar').onclick = evaluateQuiz;
+}
+
+function checkAllAnswered() {
+  const btn = document.getElementById('btn-calificar');
+  if (Object.keys(userAnswers).length === 10) {
+    btn.innerHTML = "Calificar Evaluación ✅";
+    btn.style.background = "var(--naranja)";
+    btn.style.color = "var(--blanco)";
+  }
+}
+
+function evaluateQuiz() {
+  if (Object.keys(userAnswers).length < 10) {
+    alert("⚠️ Por favor responde las 10 preguntas antes de calificar.");
+    return;
+  }
+
+  quizDone = true;
+  let score = 0;
+
+  document.querySelectorAll('.question-block').forEach(block => {
+    const qNum = block.dataset.q;
+    const correctAns = block.dataset.ans;
+    const userAns = userAnswers[qNum];
+    const feedDiv = document.getElementById('feed-' + qNum);
+
+    // Deshabilitar todos los botones
+    block.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.classList.add('disabled');
+      // Marcar visualmente la opción correcta en todos los casos
+      if(btn.dataset.val === correctAns) {
+        btn.classList.add('correct');
+      }
+    });
+
+    const selectedBtn = block.querySelector(`.opt-btn[data-val="${userAns}"]`);
+
+    if (userAns === correctAns) {
+      score++;
+      feedDiv.innerHTML = "<strong>✅ ¡Correcto!</strong> " + feedDiv.innerHTML;
+      feedDiv.classList.add('success', 'show');
+    } else {
+      selectedBtn.classList.add('incorrect');
+      feedDiv.innerHTML = "<strong>❌ Incorrecto.</strong> " + feedDiv.innerHTML;
+      feedDiv.classList.add('error', 'show');
+    }
+  });
+
+  // Mostrar resultados
+  document.getElementById('top-score').textContent = `${score} / 10`;
+  document.getElementById('btn-calificar').style.display = 'none';
+  document.getElementById('btn-reintentar').style.display = 'inline-block';
+
+  showModal(score);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showModal(score) {
+  const modal = document.getElementById('result-modal');
+  const mTitle = document.getElementById('m-title');
+  const mScore = document.getElementById('m-score');
+  const mText = document.getElementById('m-text');
+  const mIcon = document.getElementById('m-icon');
+
+  mScore.textContent = `${score} / 10`;
+
+  if (score === 10) {
+    mIcon.textContent = "🏆";
+    mTitle.textContent = "¡Perfecto!";
+    mText.textContent = "Dominas los números enteros a la perfección. ¡Excelente trabajo!";
+  } else if (score >= 8) {
+    mIcon.textContent = "🌟";
+    mTitle.textContent = "¡Muy bien!";
+    mText.textContent = "Tienes un gran entendimiento del tema. Revisa los pequeños detalles.";
+  } else if (score >= 6) {
+    mIcon.textContent = "👍";
+    mTitle.textContent = "Buen esfuerzo";
+    mText.textContent = "Aprobaste, pero aún puedes mejorar. Revisa las correcciones en la pantalla.";
+  } else {
+    mIcon.textContent = "💪";
+    mTitle.textContent = "¡No te rindas!";
+    mText.textContent = "Te sugiero repasar un poco más la teoría y la recta numérica. ¡La práctica hace al maestro!";
+  }
+
+  modal.classList.add('active');
+}
+
+// Iniciar al cargar
+window.onload = initQuiz;
+
+</script>
+</body>
+</html>
