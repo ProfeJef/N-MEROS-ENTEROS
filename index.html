@@ -299,6 +299,11 @@
     }
     .footer-ruta span:hover { color: var(--verde-neon); background: rgba(46,204,138,.1); }
     .footer-ruta span.f-active { color: var(--verde-neon); }
+
+    .footer-diseno {
+      color: rgba(255,255,255,.7); font-size: .78rem; display: flex; align-items: center; gap: .3rem; margin-left: 1rem; border-left: 1px solid rgba(255,255,255,.15); padding-left: 1rem;
+    }
+
     .footer-reset {
       color: var(--rojo-error); font-size: .72rem; cursor: pointer;
       padding: 2px 7px; border-radius: 8px; font-weight: 700;
@@ -348,6 +353,7 @@
       }
       .iframe-container { top: 112px; }
       .footer-ruta { display: none; }
+      .footer-diseno { display: none; } /* Hide the design credit on mobile to save space */
     }
   </style>
 </head>
@@ -360,7 +366,7 @@
   <div class="modal-content">
     <div class="modal-icon" aria-hidden="true">🚀</div>
     <h2 class="modal-title" id="modalTitulo">¡Bienvenido al módulo!</h2>
-    <p class="modal-text">En este módulo vas a explorar el mundo de los <strong>Números Enteros</strong>.</p>
+    <p class="modal-text">En este módulo vas a explorar el mundo de los <strong>Números Enteros para Grado 6°</strong>.</p>
 
     <!-- OBJETIVOS DE APRENDIZAJE -->
     <div class="modal-objetivos" role="region" aria-label="Objetivos de aprendizaje">
@@ -401,7 +407,7 @@
   <div class="nav-top">
     <a class="nav-brand" role="button" tabindex="0" aria-label="Ir al inicio" onclick="showPage('inicio')" onkeydown="if(event.key==='Enter')showPage('inicio')">
       <div class="nav-logo">ℤ <span>Enteros</span></div>
-      <div class="nav-sub">EDUQUÉMONOS CON TICS</div>
+      <div class="nav-sub">Grado 6° | Eduquémonos con TICs</div>
     </a>
 
     <!-- Indicador de progreso del módulo (visible tras iniciar) -->
@@ -501,18 +507,24 @@
 <footer id="mainFooter" role="contentinfo">
   <div class="footer-saludo" id="footer-saludo">
     <span>💻</span>
-    Diseñado por <a class="footer-brand" role="button" tabindex="0" onclick="showPage('quienes-somos')" onkeydown="if(event.key==='Enter')showPage('quienes-somos')">EDUQUÉMONOS CON TICS</a>
+    <button class="footer-reset" onclick="resetearPerfil()" title="Cambiar de usuario" aria-label="Cambiar usuario y borrar progreso">✕ Reset</button>
   </div>
-  <div class="footer-ruta" id="footer-ruta" role="navigation" aria-label="Ruta de aprendizaje">
-    <span onclick="showPage('teoria')"     data-page="teoria">🧠 Teoría</span>
-    <span style="color:rgba(255,255,255,.2)">›</span>
-    <span onclick="showPage('practica')"   data-page="practica">🎮 Práctica</span>
-    <span style="color:rgba(255,255,255,.2)">›</span>
-    <span onclick="showPage('evaluacion')" data-page="evaluacion">🏆 Evaluación</span>
-    <span style="color:rgba(255,255,255,.2)">›</span>
-    <span onclick="showPage('recursos')"   data-page="recursos">🎒 Recursos</span>
+
+  <div style="display: flex; align-items: center;">
+      <div class="footer-ruta" id="footer-ruta" role="navigation" aria-label="Ruta de aprendizaje">
+        <span onclick="showPage('teoria')"     data-page="teoria">🧠 Teoría</span>
+        <span style="color:rgba(255,255,255,.2)">›</span>
+        <span onclick="showPage('practica')"   data-page="practica">🎮 Práctica</span>
+        <span style="color:rgba(255,255,255,.2)">›</span>
+        <span onclick="showPage('evaluacion')" data-page="evaluacion">🏆 Evaluación</span>
+        <span style="color:rgba(255,255,255,.2)">›</span>
+        <span onclick="showPage('recursos')"   data-page="recursos">🎒 Recursos</span>
+      </div>
+
+      <div class="footer-diseno">
+          Diseñado por <a class="footer-brand" role="button" tabindex="0" onclick="showPage('quienes-somos')" onkeydown="if(event.key==='Enter')showPage('quienes-somos')" style="margin-left: 4px;">EDUQUÉMONOS CON TICS</a>
+      </div>
   </div>
-  <div></div>
 </footer>
 
 <!-- Toast de notificación -->
