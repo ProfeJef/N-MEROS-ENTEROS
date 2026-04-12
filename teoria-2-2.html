@@ -15,59 +15,131 @@
       --blanco:  #FFFFFF;
       --gris:    #f0f2f5;
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Open Sans',sans-serif; background:var(--fondo); color:var(--texto); }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Open Sans',sans-serif; background:var(--fondo); color:var(--texto); overflow-x:hidden; }
+
+    /* ══════════════════════════════
+       BARRA PROGRESO DE LECTURA
+    ══════════════════════════════ */
+    #read-progress {
+      position:fixed; top:0; left:0; height:4px; z-index:9999;
+      background: linear-gradient(90deg, var(--verde), var(--naranja));
+      width:0%; transition:width .15s linear;
+    }
+
+    /* ══════════════════════════════
+       ÍNDICE DE NAVEGACIÓN
+    ══════════════════════════════ */
+    .toc {
+      background:var(--blanco); border-left:4px solid var(--verde);
+      border-radius:12px; padding:1.2rem 1.5rem;
+      max-width:700px; margin:2rem auto 0;
+      box-shadow:0 2px 12px rgba(0,0,0,.06);
+    }
+    .toc h4 {
+      font-family:'Nunito',sans-serif; font-weight:900; font-size:.85rem;
+      text-transform:uppercase; letter-spacing:1px; color:var(--azul);
+      margin-bottom:.75rem;
+    }
+    .toc ol { list-style:none; counter-reset:toc-c; display:flex; flex-wrap:wrap; gap:.5rem; }
+    .toc ol li { counter-increment:toc-c; }
+    .toc ol li a {
+      display:flex; align-items:center; gap:.4rem;
+      background:var(--gris); border-radius:20px;
+      padding:.28rem .9rem; font-size:.82rem;
+      font-family:'Nunito',sans-serif; font-weight:700;
+      color:var(--azul); text-decoration:none;
+      transition:background .2s, color .2s;
+    }
+    .toc ol li a:hover { background:var(--verde); color:var(--azul); }
+
+    /* ══════════════════════════════
+       BANDERA DE OBJETIVOS
+    ══════════════════════════════ */
+    .objetivos-band {
+      background:linear-gradient(135deg,#0d2448 0%,#1A3C6E 100%);
+      padding:2rem 1.5rem;
+    }
+    .objetivos-inner {
+      max-width:900px; margin:0 auto;
+      display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-start;
+    }
+    .obj-titulo {
+      font-family:'Nunito',sans-serif; font-weight:900;
+      color:var(--verde); font-size:1rem;
+      text-transform:uppercase; letter-spacing:1px;
+      width:100%; margin-bottom:.2rem;
+    }
+    .obj-item {
+      display:flex; align-items:flex-start; gap:.5rem;
+      background:rgba(255,255,255,.07); border:1.5px solid rgba(46,204,138,.3);
+      border-radius:12px; padding:.65rem 1rem;
+      font-size:.85rem; color:rgba(255,255,255,.9); line-height:1.5;
+      flex:1 1 200px;
+    }
+    .obj-icon { font-size:1.1rem; flex-shrink:0; }
 
     /* ══════════════════════════════
        UTILIDADES GENERALES
     ══════════════════════════════ */
+    .section-wrap { max-width:1100px; margin:0 auto; padding:4rem 1.5rem; }
     .section-title {
       font-family:'Nunito',sans-serif; font-weight:900;
-      font-size:clamp(1.6rem,4vw,2.2rem); color:var(--azul);
-      margin-bottom:.4rem;
+      font-size:clamp(1.6rem,4vw,2.2rem); color:var(--azul); margin-bottom:.4rem;
     }
-    .section-sub {
-      color:#777; font-size:.97rem; margin-bottom:2rem; max-width:680px;
-    }
+    .section-sub { color:#777; font-size:.97rem; margin-bottom:2rem; max-width:680px; line-height:1.7; }
     .tag {
-      display:inline-block; font-family:'Nunito',sans-serif; font-weight:700;
+      display:inline-flex; align-items:center; gap:.4rem;
+      font-family:'Nunito',sans-serif; font-weight:700;
       font-size:.75rem; letter-spacing:1px; text-transform:uppercase;
-      padding:.25rem .85rem; border-radius:20px; margin-bottom:1rem;
+      padding:.28rem .9rem; border-radius:20px; margin-bottom:1rem;
     }
     .tag-azul   { background:rgba(26,60,110,.1);  color:var(--azul); }
     .tag-verde  { background:rgba(46,204,138,.15); color:#1a8c5e; }
     .tag-orange { background:rgba(244,161,39,.15); color:#b87000; }
 
     /* ══════════════════════════════
-       SECCIÓN 2 – ¿QUÉ SON?
+       SECCIÓN 1 – ¿QUÉ SON?
     ══════════════════════════════ */
-    #que-son {
-      padding:5rem 2rem;
-      background:var(--blanco);
-    }
+    #que-son { background:var(--blanco); }
     .que-son-inner {
-      max-width:1050px; margin:0 auto;
-      display:grid; grid-template-columns:1fr 1fr;
+      display:grid; grid-template-columns:1.2fr 1fr;
       gap:3rem; align-items:start;
     }
 
-    /* texto */
     .def-box {
       background:var(--gris); border-left:5px solid var(--verde);
       border-radius:12px; padding:1.4rem 1.6rem; margin:1.2rem 0;
-      font-size:.95rem; line-height:1.75; color:var(--texto);
+      font-size:.97rem; line-height:1.8;
     }
     .def-box strong { color:var(--azul); font-family:'Nunito',sans-serif; }
     .def-formula {
       display:block; text-align:center; margin:.6rem 0;
-      font-family:'Nunito',sans-serif; font-size:1.15rem; font-weight:900;
-      color:var(--azul); letter-spacing:2px;
+      font-family:'Nunito',sans-serif; font-size:clamp(1rem,3vw,1.15rem); font-weight:900;
+      color:var(--azul); letter-spacing:1px;
+      background:var(--blanco); padding:.5rem; border-radius:8px;
     }
 
-    /* ejemplos cotidianos */
-    .ejemplos-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.2rem;
+    /* Comparación ℕ vs ℤ */
+    .vs-table {
+      width:100%; border-collapse:collapse; margin:1.4rem 0; font-size:.9rem;
     }
+    .vs-table th {
+      background:var(--azul); color:var(--blanco);
+      font-family:'Nunito',sans-serif; font-weight:800; padding:.7rem 1rem;
+      text-align:left;
+    }
+    .vs-table th:first-child { border-radius:10px 0 0 0; }
+    .vs-table th:last-child  { border-radius:0 10px 0 0; }
+    .vs-table td { padding:.65rem 1rem; border-bottom:1px solid #eee; }
+    .vs-table tr:last-child td { border-bottom:none; }
+    .vs-table tr:nth-child(even) td { background:#fafafa; }
+    .hl-verde { color:#1a8c5e; font-weight:700; }
+    .hl-naranja { color:#b87000; font-weight:700; }
+
+    /* Ejemplos cotidianos */
+    .ejemplos-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.2rem; }
     .ejemplo-card {
       background:var(--gris); border-radius:12px; padding:1rem 1.2rem;
       display:flex; align-items:flex-start; gap:.8rem;
@@ -78,517 +150,661 @@
     .ejemplo-card.visible { animation:riseUp .5s ease forwards; }
     .ejemplo-card:hover { transform:translateY(-4px); box-shadow:0 8px 20px rgba(0,0,0,.09); }
     .ej-icon { font-size:1.8rem; flex-shrink:0; }
-    .ej-content h4 {
-      font-family:'Nunito',sans-serif; font-weight:700;
-      color:var(--azul); font-size:.9rem; margin-bottom:.3rem;
-    }
-    .ej-content p { font-size:.82rem; color:#666; line-height:1.5; }
+    .ej-content h4 { font-family:'Nunito',sans-serif; font-weight:700; color:var(--azul); font-size:.9rem; margin-bottom:.3rem; }
+    .ej-content p  { font-size:.82rem; color:#666; line-height:1.5; }
     .ej-value { font-weight:700; color:var(--naranja); }
 
-    /* infografía derecha */
+    /* Infografía lateral */
     .infografia {
-      background:linear-gradient(135deg,#0d2448,var(--azul));
+      background:linear-gradient(135deg,#12284C 0%,#1A3C6E 100%);
       border-radius:20px; padding:2rem; color:var(--blanco);
-      position:sticky; top:80px;
+      position:sticky; top:20px;
+      box-shadow:0 15px 35px rgba(0,0,0,.15);
+      border:1px solid rgba(255,255,255,.1);
     }
     .infografia h3 {
-      font-family:'Nunito',sans-serif; font-weight:900;
-      font-size:1.1rem; margin-bottom:1.5rem; color:var(--verde);
-      text-align:center;
+      font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem;
+      color:var(--verde); text-align:center; text-transform:uppercase;
+      letter-spacing:1px; margin-bottom:1.4rem;
     }
     .info-row {
       display:flex; align-items:center; gap:1rem;
-      padding:.9rem 1rem; border-radius:10px;
-      margin-bottom:.8rem; background:rgba(255,255,255,.07);
-      transition:background .2s;
+      padding:.9rem 1rem; border-radius:12px; margin-bottom:.9rem;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.05);
+      transition:all .3s; cursor:default;
     }
-    .info-row:hover { background:rgba(255,255,255,.13); }
+    .info-row:hover { background:rgba(255,255,255,.1); transform:translateX(4px); }
     .info-circle {
-      width:46px; height:46px; border-radius:50%;
+      width:48px; height:48px; border-radius:12px; flex-shrink:0;
       display:flex; align-items:center; justify-content:center;
-      font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem;
-      flex-shrink:0;
+      font-family:'Nunito',sans-serif; font-weight:900; font-size:1.4rem;
+      box-shadow:0 4px 12px rgba(0,0,0,.2);
     }
-    .ic-neg  { background:rgba(244,161,39,.25); color:var(--naranja); border:2px solid var(--naranja); }
-    .ic-zero { background:rgba(46,204,138,.25); color:var(--verde);   border:2px solid var(--verde); }
-    .ic-pos  { background:rgba(255,255,255,.15); color:var(--blanco);  border:2px solid rgba(255,255,255,.4); }
-    .info-text h4 {
-      font-family:'Nunito',sans-serif; font-weight:700;
-      font-size:.88rem; margin-bottom:.15rem;
+    .ic-neg  { background:linear-gradient(135deg,#F4A127,#d35400); color:#fff; }
+    .ic-zero { background:linear-gradient(135deg,#2ECC8A,#27ae60); color:#fff; }
+    .ic-pos  { background:linear-gradient(135deg,#3498db,#2980b9); color:#fff; }
+    .info-text h4 { font-family:'Nunito',sans-serif; font-weight:800; font-size:.95rem; margin-bottom:.25rem; }
+    .info-text p  { font-size:.82rem; color:rgba(255,255,255,.7); line-height:1.45; }
+
+    .dato-clave {
+      margin-top:1.4rem; background:rgba(46,204,138,.1);
+      border-left:4px solid var(--verde); border-radius:0 12px 12px 0; padding:1.1rem;
     }
-    .info-text p { font-size:.78rem; color:rgba(255,255,255,.6); line-height:1.4; }
     .btn-explorar {
-      display:block; margin-top:1.5rem; text-align:center;
+      display:block; margin-top:1.8rem; text-align:center;
       background:var(--verde); color:var(--azul);
-      font-family:'Nunito',sans-serif; font-weight:900;
-      font-size:.95rem; padding:.7rem 1.8rem; border-radius:30px;
-      text-decoration:none; transition:transform .2s,box-shadow .2s;
+      font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem;
+      padding:.9rem 1.5rem; border-radius:30px; text-decoration:none;
+      transition:all .2s;
     }
     .btn-explorar:hover { transform:translateY(-3px); box-shadow:0 6px 18px rgba(46,204,138,.4); }
 
     /* ══════════════════════════════
+       SECCIÓN 2 – COMPARACIÓN Y ORDEN
+    ══════════════════════════════ */
+    #orden { background:var(--gris); }
+    .reglas-orden {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem;
+    }
+    .regla-orden-card {
+      background:var(--blanco); border-radius:14px; padding:1.3rem 1.4rem;
+      border-top:4px solid var(--naranja);
+      box-shadow:0 2px 10px rgba(0,0,0,.06);
+      font-size:.9rem; line-height:1.6;
+    }
+    .regla-orden-card .r-titulo {
+      font-family:'Nunito',sans-serif; font-weight:800; color:var(--azul);
+      font-size:.95rem; margin-bottom:.5rem; display:flex; align-items:center; gap:.4rem;
+    }
+    .regla-orden-card .r-ej {
+      background:var(--gris); border-radius:8px; padding:.4rem .8rem;
+      font-family:'Nunito',sans-serif; font-weight:700; font-size:.88rem;
+      color:var(--azul); margin-top:.6rem; display:inline-block;
+    }
+
+    /* ══════════════════════════════
        SECCIÓN 3 – RECTA NUMÉRICA
     ══════════════════════════════ */
-    #recta {
-      padding:5rem 2rem;
-      background:var(--gris);
-    }
-    .recta-inner { max-width:1000px; margin:0 auto; }
-
-    /* canvas recta */
+    #recta { background:var(--blanco); }
     .canvas-wrap {
-      background:var(--blanco); border-radius:16px;
-      padding:2rem; box-shadow:0 2px 16px rgba(0,0,0,.07);
-      margin-bottom:1.5rem; overflow:hidden;
+      background:var(--gris); border-radius:16px;
+      padding:1.5rem 1rem; box-shadow:0 2px 16px rgba(0,0,0,.06);
+      margin-bottom:1rem; overflow-x:auto;
     }
-    #rectaCanvas { display:block; width:100%; height:auto; }
-
-    /* info puntos */
+    #rectaCanvas { display:block; min-width:800px; height:auto; margin:0 auto; cursor:pointer; }
     .puntos-info {
-      display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem;
+      display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center; margin-bottom:1.5rem;
     }
     .punto-badge {
       display:flex; align-items:center; gap:.5rem;
-      background:var(--blanco); border-radius:10px;
-      padding:.6rem 1rem; font-size:.85rem;
-      box-shadow:0 1px 6px rgba(0,0,0,.07);
+      background:var(--blanco); border-radius:10px; padding:.55rem 1rem;
+      font-size:.85rem; box-shadow:0 2px 8px rgba(0,0,0,.05);
       font-family:'Nunito',sans-serif; font-weight:700;
     }
-    .dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+    .dot { width:13px; height:13px; border-radius:50%; flex-shrink:0; }
     .dot-neg  { background:var(--naranja); }
     .dot-zero { background:var(--verde); }
     .dot-pos  { background:var(--azul); }
 
-    /* GeoGebra embed */
+    /* Panel info al hacer clic */
+    .recta-info-panel {
+      background:var(--azul); color:var(--blanco);
+      border-radius:12px; padding:1rem 1.4rem;
+      font-family:'Nunito',sans-serif; font-size:.95rem; line-height:1.7;
+      margin-bottom:1.4rem; display:none;
+      animation:fadeIn .3s ease;
+    }
+    .recta-info-panel strong { color:var(--verde); }
+    .recta-info-panel .rip-valor {
+      font-size:2rem; font-weight:900; display:block; margin:.3rem 0;
+    }
+
+    /* GeoGebra */
     .geogebra-wrap {
-      background:var(--blanco); border-radius:16px;
-      overflow:hidden; box-shadow:0 2px 16px rgba(0,0,0,.07);
-      margin-top:1.5rem;
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 45px; /* Espacio para el header */
-      min-height: 400px; 
+      background:var(--blanco); border-radius:16px; overflow:hidden;
+      box-shadow:0 2px 16px rgba(0,0,0,.07); margin-top:2rem;
+      position:relative;
     }
     .gg-header {
       background:var(--azul); padding:.75rem 1.5rem;
       display:flex; align-items:center; gap:.6rem;
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      z-index: 10;
     }
-    .gg-header span {
-      font-family:'Nunito',sans-serif; font-weight:700;
-      color:var(--blanco); font-size:.9rem;
-    }
-    .gg-header .gg-dot {
-      width:10px; height:10px; border-radius:50%; background:var(--verde);
-      animation:pulse 1.4s infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
-
-    .geogebra-wrap iframe {
-      width: 700px !important;
-      height: 350px !important;
-      max-width: 100%;
-      border: none;
-      display: block;
-      margin: 10px auto;
-    }
+    .gg-header span { font-family:'Nunito',sans-serif; font-weight:700; color:var(--blanco); font-size:.9rem; }
+    .gg-dot { width:10px; height:10px; border-radius:50%; background:var(--verde); animation:pulse 1.4s infinite; }
+    .geogebra-wrap iframe { width:100%; height:350px; border:none; display:block; }
 
     /* ══════════════════════════════
-       SECCIÓN 4 – OPERACIONES
+       SECCIÓN 4 – VALOR ABSOLUTO
     ══════════════════════════════ */
-    #operaciones {
-      padding:5rem 2rem;
-      background:var(--blanco);
+    #valor-abs { background:var(--gris); }
+    .va-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem;
+      margin-top:1.5rem;
     }
-    .ops-inner { max-width:1000px; margin:0 auto; }
+    .va-card {
+      background:var(--blanco); border-radius:14px; padding:1.2rem;
+      text-align:center; box-shadow:0 2px 10px rgba(0,0,0,.06);
+    }
+    .va-card .va-expr { font-family:'Nunito',sans-serif; font-size:1.3rem; font-weight:900; color:#888; }
+    .va-card .va-arrow { font-size:1.5rem; color:var(--naranja); margin:.3rem 0; display:block; }
+    .va-card .va-result { font-family:'Nunito',sans-serif; font-size:2rem; font-weight:900; color:var(--azul); }
+    .va-card .va-hint { font-size:.78rem; color:#999; margin-top:.3rem; }
 
-    /* tabs */
-    .tabs {
-      display:flex; gap:.5rem; margin-bottom:2rem;
-      flex-wrap:wrap;
-    }
+    /* ══════════════════════════════
+       SECCIÓN 5 – OPERACIONES
+    ══════════════════════════════ */
+    #operaciones { background:var(--blanco); }
+    .tabs { display:flex; gap:.8rem; margin-bottom:2rem; flex-wrap:wrap; }
     .tab-btn {
-      font-family:'Nunito',sans-serif; font-weight:700;
-      font-size:.95rem; padding:.55rem 1.5rem; border-radius:25px;
+      font-family:'Nunito',sans-serif; font-weight:800;
+      font-size:.95rem; padding:.75rem 1.6rem; border-radius:30px;
       border:2px solid var(--azul); background:transparent; color:var(--azul);
       cursor:pointer; transition:all .22s;
     }
     .tab-btn.active, .tab-btn:hover {
       background:var(--azul); color:var(--blanco);
+      transform:translateY(-2px); box-shadow:0 5px 15px rgba(26,60,110,.2);
     }
-
     .tab-panel { display:none; }
     .tab-panel.active { display:block; animation:fadeIn .35s ease; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-    /* regla general */
     .regla-box {
-      background:linear-gradient(90deg,rgba(26,60,110,.07),rgba(46,204,138,.07));
+      background:linear-gradient(90deg,rgba(26,60,110,.04),rgba(46,204,138,.04));
       border-left:5px solid var(--verde); border-radius:12px;
-      padding:1.2rem 1.6rem; margin-bottom:1.5rem;
-      font-size:.95rem; line-height:1.7;
+      padding:1.5rem; margin-bottom:2rem; font-size:.96rem; line-height:1.7;
     }
-    .regla-box strong { color:var(--azul); font-family:'Nunito',sans-serif; }
+    .regla-box .rb-titulo {
+      font-family:'Nunito',sans-serif; font-weight:900; color:var(--azul);
+      font-size:1.05rem; display:flex; align-items:center; gap:.5rem;
+      margin-bottom:1rem;
+    }
+    .regla-steps { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+    .regla-steps li {
+      display:flex; flex-direction:column; gap:.4rem;
+      border-left:3px solid var(--naranja); padding-left:1rem;
+    }
+    .regla-steps li strong { color:var(--azul); font-family:'Nunito',sans-serif; }
+    .regla-ej-box {
+      background:var(--blanco); border-radius:8px; padding:.6rem 1rem;
+      font-family:'Nunito',sans-serif; font-weight:700; font-size:.88rem;
+      color:var(--texto); border:1px dashed #ccc;
+    }
 
-    /* ejemplos visuales */
+    /* Tarjetas de ejemplos */
     .ejemplos-ops {
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-      gap:1rem; margin-bottom:1.8rem;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;
+      margin-bottom:2rem;
     }
     .op-card {
-      background:var(--gris); border-radius:12px; padding:1.2rem;
-      text-align:center; border-top:3px solid var(--verde);
-      font-family:'Nunito',sans-serif;
+      background:var(--gris); border-radius:12px; padding:1.4rem 1rem;
+      text-align:center; border-top:4px solid var(--verde);
+      font-family:'Nunito',sans-serif; transition:transform .2s;
     }
-    .op-card .op-expr {
-      font-size:1.2rem; font-weight:900; color:var(--azul); margin-bottom:.4rem;
-    }
-    .op-card .op-result {
-      font-size:1.6rem; font-weight:900;
-    }
-    .op-card .op-hint { font-size:.78rem; color:#888; margin-top:.3rem; }
-    .pos-result { color:var(--azul); }
-    .neg-result { color:var(--naranja); }
+    .op-card:hover { transform:translateY(-3px); }
+    .op-card .op-expr  { font-size:1.15rem; font-weight:900; color:var(--azul); margin-bottom:.45rem; }
+    .op-card .op-result{ font-size:1.9rem; font-weight:900; }
+    .op-card .op-hint  { font-size:.8rem; color:#888; margin-top:.4rem; line-height:1.4; }
+    .pos-result  { color:var(--azul); }
+    .neg-result  { color:var(--naranja); }
     .zero-result { color:var(--verde); }
 
-    /* video embed */
-    .video-section { margin-top:1rem; }
-    .video-section h3 {
-      font-family:'Nunito',sans-serif; font-weight:900;
-      font-size:1rem; color:var(--azul); margin-bottom:.8rem;
-      display:flex; align-items:center; gap:.5rem;
+    /* Video */
+    .video-section {
+      margin-top:2rem; background:var(--gris); padding:1.5rem;
+      border-radius:16px;
     }
-    .video-wrap {
-      position:relative; width:100%; padding-bottom:56.25%;
-      border-radius:14px; overflow:hidden;
-      box-shadow:0 4px 20px rgba(0,0,0,.12);
-    }
-    .video-wrap iframe {
-      position:absolute; top:0; left:0;
-      width:100%; height:100%; border:none;
-    }
+    .video-section h3 { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.1rem; color:var(--azul); margin-bottom:1rem; }
+    .video-wrap { position:relative; width:100%; padding-bottom:56.25%; border-radius:12px; overflow:hidden; }
+    .video-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
 
-    /* ejercicios guiados */
-    .ejercicios { margin-top:1.8rem; }
-    .ejercicios h3 {
-      font-family:'Nunito',sans-serif; font-weight:900;
-      color:var(--azul); font-size:1rem; margin-bottom:1rem;
-    }
+    /* Acordeón de ejercicios */
+    .ejercicios { margin-top:2rem; }
+    .ejercicios h3 { font-family:'Nunito',sans-serif; font-weight:900; color:var(--azul); font-size:1.1rem; margin-bottom:1rem; }
     .ej-item {
-      background:var(--gris); border-radius:12px; padding:1.2rem 1.5rem;
-      margin-bottom:1rem; cursor:pointer;
-      border-left:4px solid var(--naranja);
-      transition:box-shadow .2s;
+      background:var(--blanco); border-radius:12px; padding:1.1rem 1.4rem;
+      margin-bottom:.9rem; cursor:pointer;
+      border-left:5px solid var(--naranja);
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+      transition:all .2s;
     }
     .ej-item:hover { box-shadow:0 4px 14px rgba(0,0,0,.08); }
     .ej-question {
-      font-family:'Nunito',sans-serif; font-weight:700;
-      font-size:.95rem; color:var(--azul);
-      display:flex; justify-content:space-between; align-items:center;
+      font-family:'Nunito',sans-serif; font-weight:700; font-size:.97rem;
+      color:var(--azul); display:flex; justify-content:space-between; align-items:center;
+      gap:.8rem;
     }
-    .ej-toggle { font-size:1.1rem; color:var(--naranja); transition:transform .3s; }
+    .ej-toggle { font-size:1.5rem; color:var(--naranja); transition:transform .3s; line-height:1; flex-shrink:0; }
     .ej-item.open .ej-toggle { transform:rotate(45deg); }
     .ej-answer {
-      display:none; margin-top:.8rem; padding-top:.8rem;
-      border-top:1px solid rgba(0,0,0,.08);
-      font-size:.88rem; color:#555; line-height:1.6;
+      display:none; margin-top:.9rem; padding-top:.9rem;
+      border-top:1px solid #eee; font-size:.93rem; color:#555; line-height:1.7;
     }
     .ej-item.open .ej-answer { display:block; animation:fadeIn .3s ease; }
     .ans-highlight {
-      display:inline-block; margin-top:.4rem;
-      background:var(--azul); color:var(--blanco);
-      font-family:'Nunito',sans-serif; font-weight:700;
-      padding:.25rem .8rem; border-radius:8px; font-size:.9rem;
+      display:inline-block; margin-top:.3rem; background:var(--azul); color:var(--blanco);
+      font-family:'Nunito',sans-serif; font-weight:700; padding:.25rem .9rem; border-radius:8px; font-size:1rem;
     }
 
     /* ══════════════════════════════
-       ANIMACIONES GLOBALES
+       BANNER FINAL (CTA AL INDEX)
     ══════════════════════════════ */
-    @keyframes riseUp { to { opacity:1; transform:translateY(0); } }
+    .cta-final {
+      background:linear-gradient(135deg, var(--verde) 0%, #1abc9c 100%);
+      padding:3rem 1.5rem; text-align:center;
+    }
+    .cta-final h2 { font-family:'Nunito',sans-serif; font-weight:900; font-size:clamp(1.4rem,4vw,2rem); color:var(--azul); margin-bottom:.5rem; }
+    .cta-final p  { color:rgba(26,60,110,.75); font-size:.97rem; margin-bottom:1.5rem; }
+    .cta-final .btn-cta {
+      display:inline-flex; align-items:center; gap:.5rem;
+      background:var(--azul); color:var(--blanco);
+      font-family:'Nunito',sans-serif; font-weight:800; font-size:1rem;
+      padding:.85rem 2rem; border-radius:30px; border:none; cursor:pointer;
+      text-decoration:none; transition:all .2s;
+    }
+    .cta-final .btn-cta:hover { transform:translateY(-3px); box-shadow:0 8px 22px rgba(0,0,0,.2); }
+
+    /* ══════════════════════════════
+       ANIMACIONES
+    ══════════════════════════════ */
+    @keyframes riseUp  { to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn  { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse   { 0%,100%{opacity:1} 50%{opacity:.4} }
 
     /* ══════════════════════════════
        RESPONSIVE
     ══════════════════════════════ */
     @media(max-width:768px){
-      .que-son-inner { grid-template-columns:1fr; }
-      .infografia { position:static; }
+      .que-son-inner { grid-template-columns:1fr; gap:2rem; }
       .ejemplos-grid { grid-template-columns:1fr; }
+      .infografia    { position:static; }
+      .tabs          { flex-direction:column; }
+      .tab-btn       { width:100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- ╔══════════════════════════════════════════╗ -->
-<!-- ║   SECCIÓN 2 – ¿QUÉ SON LOS ENTEROS?     ║ -->
-<!-- ╚══════════════════════════════════════════╝ -->
+<!-- Barra de progreso de lectura -->
+<div id="read-progress" role="progressbar" aria-label="Progreso de lectura"></div>
+
+<!-- ══════════════════════════════════════
+     OBJETIVOS DE APRENDIZAJE
+══════════════════════════════════════ -->
+<div class="objetivos-band" role="region" aria-label="Objetivos de aprendizaje">
+  <div class="objetivos-inner">
+    <p class="obj-titulo">🎯 Al terminar esta sección podrás:</p>
+    <div class="obj-item"><span class="obj-icon">1️⃣</span> Definir el conjunto ℤ y distinguirlo de ℕ</div>
+    <div class="obj-item"><span class="obj-icon">2️⃣</span> Ordenar y comparar enteros usando la recta numérica</div>
+    <div class="obj-item"><span class="obj-icon">3️⃣</span> Calcular el valor absoluto de cualquier entero</div>
+    <div class="obj-item"><span class="obj-icon">4️⃣</span> Sumar y restar enteros aplicando la ley de signos</div>
+    <div class="obj-item"><span class="obj-icon">5️⃣</span> Usar los enteros en situaciones de la vida cotidiana</div>
+  </div>
+</div>
+
+<!-- Índice de navegación rápida -->
+<div style="background:var(--fondo); padding:1rem 1.5rem;">
+  <div class="toc">
+    <h4>📌 Contenido de esta sección</h4>
+    <ol>
+      <li><a href="#que-son">🔢 ¿Qué son?</a></li>
+      <li><a href="#orden">📊 Orden y comparación</a></li>
+      <li><a href="#recta">📏 Recta numérica</a></li>
+      <li><a href="#valor-abs">⚡ Valor absoluto</a></li>
+      <li><a href="#operaciones">➕➖ Operaciones</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN 1 – ¿QUÉ SON LOS ENTEROS?
+══════════════════════════════════════ -->
 <section id="que-son">
-  <div class="que-son-inner">
+  <div class="section-wrap">
+    <div class="que-son-inner">
 
-    <!-- COLUMNA IZQUIERDA: texto + ejemplos -->
-    <div>
-      <span class="tag tag-azul">📖 Sección 2 · Teoría</span>
-      <h2 class="section-title">¿Qué son los<br>Números Enteros?</h2>
-      <p class="section-sub">Un nuevo tipo de número que nos permite representar cantidades <strong>menores que cero</strong> y situaciones de la vida cotidiana.</p>
+      <!-- COLUMNA IZQUIERDA -->
+      <div>
+        <span class="tag tag-azul">📖 Concepto Base</span>
+        <h2 class="section-title">¿Qué son los Números Enteros?</h2>
+        <p class="section-sub">Los números naturales no son suficientes para describir la realidad: necesitamos representar deudas, temperaturas bajo cero y descensos. Ahí nacen los <strong>enteros</strong>.</p>
 
-      <div class="def-box">
-        Los <strong>números enteros (ℤ)</strong> son el conjunto formado por los números negativos, el cero y los números positivos:
-        <span class="def-formula">ℤ = { …, −3, −2, −1, 0, +1, +2, +3, … }</span>
-        A diferencia de los naturales, <strong>no tienen límite en ninguna dirección</strong>: se extienden infinitamente hacia los positivos y hacia los negativos.
+        <div class="def-box">
+          Los <strong>números enteros (ℤ)</strong> forman el conjunto infinito que incluye los números negativos, el cero y los positivos:
+          <span class="def-formula">ℤ = { …, −3, −2, −1, 0, +1, +2, +3, … }</span>
+          La letra <strong>ℤ</strong> viene del alemán <em>Zahlen</em> (números).
+        </div>
+
+        <!-- Comparación ℕ vs ℤ -->
+        <table class="vs-table" role="table" aria-label="Comparación entre naturales y enteros">
+          <thead>
+            <tr><th>Conjunto ℕ (naturales)</th><th>Conjunto ℤ (enteros)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1, 2, 3, 4 …</td>
+              <td class="hl-verde">…−2, −1, 0, +1, +2…</td>
+            </tr>
+            <tr>
+              <td>Solo positivos y cero</td>
+              <td class="hl-verde">Positivos, negativos y cero</td>
+            </tr>
+            <tr>
+              <td class="hl-naranja">No puedo restar 3 − 7</td>
+              <td class="hl-verde">3 − 7 = −4 ✓</td>
+            </tr>
+            <tr>
+              <td class="hl-naranja">No puedo representar deudas</td>
+              <td class="hl-verde">Deuda de $5.000 = −5000 ✓</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--azul);font-size:1.05rem;margin-bottom:.9rem;margin-top:2rem;">
+          🌍 Situaciones de la vida real
+        </h3>
+        <div class="ejemplos-grid">
+          <div class="ejemplo-card" data-delay="0">
+            <div class="ej-icon">🌡️</div>
+            <div class="ej-content">
+              <h4>Temperatura</h4>
+              <p>Calor: <span class="ej-value">+30°C</span><br>Helada: <span class="ej-value">−5°C</span></p>
+            </div>
+          </div>
+          <div class="ejemplo-card" data-delay="100">
+            <div class="ej-icon">🌊</div>
+            <div class="ej-content">
+              <h4>Altitud</h4>
+              <p>Montaña: <span class="ej-value">+2.500 m</span><br>Submarino: <span class="ej-value">−300 m</span></p>
+            </div>
+          </div>
+          <div class="ejemplo-card" data-delay="200">
+            <div class="ej-icon">💰</div>
+            <div class="ej-content">
+              <h4>Finanzas</h4>
+              <p>Ahorros: <span class="ej-value">+$50.000</span><br>Deuda: <span class="ej-value">−$15.000</span></p>
+            </div>
+          </div>
+          <div class="ejemplo-card" data-delay="300">
+            <div class="ej-icon">🏢</div>
+            <div class="ej-content">
+              <h4>Edificio</h4>
+              <p>Piso 4: <span class="ej-value">+4</span><br>Sótano 2: <span class="ej-value">−2</span></p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h3 style="font-family:'Nunito',sans-serif;font-weight:900;color:var(--azul);font-size:1rem;margin-bottom:.8rem;">
-        🌍 Ejemplos de la vida cotidiana
-      </h3>
-
-      <div class="ejemplos-grid">
-        <div class="ejemplo-card" data-delay="0">
-          <div class="ej-icon">🌡️</div>
-          <div class="ej-content">
-            <h4>Temperatura</h4>
-            <p>En Bogotá en enero: <span class="ej-value">+14°C</span><br>
-               En Siberia en invierno: <span class="ej-value">−40°C</span></p>
+      <!-- COLUMNA DERECHA: infografía -->
+      <div>
+        <div class="infografia" role="complementary" aria-label="Resumen de tipos de enteros">
+          <h3>Tipos de Enteros</h3>
+          <div class="info-row">
+            <div class="info-circle ic-pos">+</div>
+            <div class="info-text">
+              <h4>Positivos</h4>
+              <p>Mayores que cero. (+1, +2, +3 …). Indican ganancias, subidas, derecha.</p>
+            </div>
           </div>
-        </div>
-        <div class="ejemplo-card" data-delay="100">
-          <div class="ej-icon">🌊</div>
-          <div class="ej-content">
-            <h4>Nivel del mar</h4>
-            <p>Pico Cristóbal Colón: <span class="ej-value">+5.775 m</span><br>
-               Fosa de las Marianas: <span class="ej-value">−11.000 m</span></p>
+          <div class="info-row">
+            <div class="info-circle ic-zero">0</div>
+            <div class="info-text">
+              <h4>El Cero</h4>
+              <p>Punto neutro. Separa positivos de negativos. No es positivo ni negativo.</p>
+            </div>
           </div>
-        </div>
-        <div class="ejemplo-card" data-delay="200">
-          <div class="ej-icon">💰</div>
-          <div class="ej-content">
-            <h4>Finanzas</h4>
-            <p>Ganancia del mes: <span class="ej-value">+$50.000</span><br>
-               Deuda: <span class="ej-value">−$30.000</span></p>
+          <div class="info-row">
+            <div class="info-circle ic-neg">−</div>
+            <div class="info-text">
+              <h4>Negativos</h4>
+              <p>Menores que cero. (−1, −2, −3 …). Indican pérdidas, bajadas, izquierda.</p>
+            </div>
           </div>
-        </div>
-        <div class="ejemplo-card" data-delay="300">
-          <div class="ej-icon">🏢</div>
-          <div class="ej-content">
-            <h4>Pisos de un edificio</h4>
-            <p>Piso 5 (arriba): <span class="ej-value">+5</span><br>
-               Sótano 2 (abajo): <span class="ej-value">−2</span></p>
+          <div class="dato-clave">
+            <p style="font-size:.78rem;color:var(--verde);font-family:'Nunito',sans-serif;font-weight:900;margin-bottom:.3rem;">🔑 DATO CLAVE: ℕ ⊂ ℤ</p>
+            <p style="font-size:.85rem;color:rgba(255,255,255,.9);line-height:1.6;">Los naturales están <em>contenidos</em> en los enteros. Todo número natural es un entero, pero no todo entero es natural.</p>
           </div>
+          <a href="#operaciones" class="btn-explorar">Ir a Operaciones ↓</a>
         </div>
       </div>
     </div>
-
-    <!-- COLUMNA DERECHA: infografía -->
-    <div>
-      <div class="infografia">
-        <h3>📊 Infografía: Tipos de Enteros</h3>
-
-        <div class="info-row">
-          <div class="info-circle ic-neg">−</div>
-          <div class="info-text">
-            <h4>Enteros Negativos</h4>
-            <p>…, −5, −4, −3, −2, −1<br>Menores que cero. Representan pérdidas, deudas, bajas temperaturas, profundidades.</p>
-          </div>
-        </div>
-        <div class="info-row">
-          <div class="info-circle ic-zero">0</div>
-          <div class="info-text">
-            <h4>El Cero</h4>
-            <p>Punto de equilibrio. No es positivo ni negativo. Separa los dos grupos en la recta numérica.</p>
-          </div>
-        </div>
-        <div class="info-row">
-          <div class="info-circle ic-pos">+</div>
-          <div class="info-text">
-            <h4>Enteros Positivos</h4>
-            <p>+1, +2, +3, +4, +5, …<br>Mayores que cero. Representan ganancias, alturas, temperaturas sobre cero.</p>
-          </div>
-        </div>
-
-        <div style="margin-top:1.5rem;background:rgba(255,255,255,.07);border-radius:10px;padding:1rem;text-align:center;">
-          <p style="font-size:.8rem;color:rgba(255,255,255,.55);font-family:'Nunito',sans-serif;margin-bottom:.4rem;">DATO CLAVE</p>
-          <p style="font-size:.88rem;color:rgba(255,255,255,.85);line-height:1.5;">El valor absoluto <strong style="color:var(--verde);">|n|</strong> es la distancia de cualquier entero al cero, <strong>siempre positiva</strong>.<br>|−7| = 7 · |+7| = 7</p>
-        </div>
-
-        <a href="#recta" class="btn-explorar">🔍 Explorar ejemplos →</a>
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ╔══════════════════════════════════════════╗ -->
-<!-- ║   SECCIÓN 3 – RECTA NUMÉRICA             ║ -->
-<!-- ╚══════════════════════════════════════════╝ -->
+<!-- ══════════════════════════════════════
+     SECCIÓN 2 – ORDEN Y COMPARACIÓN
+══════════════════════════════════════ -->
+<section id="orden">
+  <div class="section-wrap">
+    <span class="tag tag-verde">📊 Comparación</span>
+    <h2 class="section-title">Orden y Comparación</h2>
+    <p class="section-sub">En la recta numérica, <strong>a la derecha siempre es mayor</strong>. Estas cuatro reglas te permiten comparar cualquier par de enteros.</p>
+
+    <div class="reglas-orden">
+      <div class="regla-orden-card">
+        <div class="r-titulo">📌 Regla 1</div>
+        <p>Todo número <strong>negativo es menor que cero</strong>, y todo <strong>positivo es mayor que cero</strong>.</p>
+        <span class="r-ej">−7 &lt; 0 &nbsp;|&nbsp; 5 &gt; 0</span>
+      </div>
+      <div class="regla-orden-card">
+        <div class="r-titulo">📌 Regla 2</div>
+        <p>Un <strong>positivo siempre es mayor</strong> que cualquier negativo.</p>
+        <span class="r-ej">+1 &gt; −100</span>
+      </div>
+      <div class="regla-orden-card">
+        <div class="r-titulo">📌 Regla 3</div>
+        <p>Entre dos <strong>negativos</strong>, es mayor el que está <em>más cerca del cero</em> (menor valor absoluto).</p>
+        <span class="r-ej">−3 &gt; −7 &nbsp;|&nbsp; |−3| &lt; |−7|</span>
+      </div>
+      <div class="regla-orden-card">
+        <div class="r-titulo">📌 Regla 4</div>
+        <p>Entre dos <strong>positivos</strong>, es mayor el de mayor valor absoluto (el de siempre).</p>
+        <span class="r-ej">+10 &gt; +3 &nbsp;|&nbsp; |10| &gt; |3|</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     SECCIÓN 3 – RECTA NUMÉRICA
+══════════════════════════════════════ -->
 <section id="recta">
-  <div class="recta-inner">
-    <span class="tag tag-verde">📏 Sección 3 · Recta Numérica</span>
-    <h2 class="section-title">Línea de los Enteros</h2>
-    <p class="section-sub">Haz clic sobre cualquier punto de la recta para ver su valor y tipo. Los puntos naranja son negativos, verde el cero, y azul los positivos.</p>
+  <div class="section-wrap">
+    <span class="tag tag-azul">📏 Herramienta Visual</span>
+    <h2 class="section-title">La Recta Numérica</h2>
+    <p class="section-sub">Toca o haz clic en cualquier punto para ver su información. En celular, desliza la recta de lado a lado.</p>
+
+    <!-- Panel informativo dinámico -->
+    <div class="recta-info-panel" id="riptPanel" role="status" aria-live="polite"></div>
 
     <div class="canvas-wrap">
-      <canvas id="rectaCanvas" width="900" height="120"></canvas>
+      <canvas id="rectaCanvas" width="900" height="120" role="img" aria-label="Recta numérica interactiva del -8 al +8"></canvas>
     </div>
 
     <div class="puntos-info">
-      <div class="punto-badge"><div class="dot dot-neg"></div> Enteros negativos (−)</div>
-      <div class="punto-badge"><div class="dot dot-zero"></div> Cero (punto de equilibrio)</div>
-      <div class="punto-badge"><div class="dot dot-pos"></div> Enteros positivos (+)</div>
-      <div class="punto-badge" id="clickInfo" style="color:var(--azul);font-size:.82rem;">👆 Haz clic en un punto</div>
+      <div class="punto-badge"><div class="dot dot-neg"></div> Negativos (izquierda)</div>
+      <div class="punto-badge"><div class="dot dot-zero"></div> Cero (centro)</div>
+      <div class="punto-badge"><div class="dot dot-pos"></div> Positivos (derecha)</div>
     </div>
 
-        <!-- GeoGebra interactivo -->
+    <!-- GeoGebra interactivo -->
     <div class="geogebra-wrap">
       <div class="gg-header">
         <div class="gg-dot"></div>
-        <span>🧮 GeoGebra Interactivo – Representar números enteros en la recta numérica</span>
+        <span>🧮 Explora con GeoGebra: ubica puntos en la recta numérica</span>
       </div>
-      <iframe 
-        scrolling="no" 
-        title="Representar números enteros en la recta numérica" 
-        src="https://www.geogebra.org/material/iframe/id/apdscjnm/width/700/height/350/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/false/rc/false/ld/false/sdz/false/ctl/false" 
-        style="border:0px;"
-        allow="autoplay; fullscreen; clipboard-write; encrypted-media; picture-in-picture" 
-        allowfullscreen> 
+      <iframe
+        scrolling="no"
+        title="Representar números enteros en la recta numérica"
+        src="https://www.geogebra.org/material/iframe/id/apdscjnm/width/700/height/350/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/false/rc/false/ld/false/sdz/false/ctl/false"
+        allowfullscreen>
       </iframe>
     </div>
+  </div>
+</section>
 
-<!-- ╔══════════════════════════════════════════╗ -->
-<!-- ║   SECCIÓN 4 – OPERACIONES                ║ -->
-<!-- ╚══════════════════════════════════════════╝ -->
-<section id="operaciones">
-  <div class="ops-inner">
-    <span class="tag tag-orange">➕➖ Sección 4 · Operaciones</span>
-    <h2 class="section-title">Operaciones con Enteros</h2>
-    <p class="section-sub">Selecciona la operación que deseas estudiar. Cada pestaña incluye regla general, ejemplos visuales, video explicativo y ejercicios resueltos.</p>
+<!-- ══════════════════════════════════════
+     SECCIÓN 4 – VALOR ABSOLUTO (NUEVA)
+══════════════════════════════════════ -->
+<section id="valor-abs">
+  <div class="section-wrap">
+    <span class="tag tag-verde">⚡ Concepto Clave</span>
+    <h2 class="section-title">Valor Absoluto</h2>
+    <p class="section-sub">El valor absoluto de un número es su <strong>distancia al cero en la recta numérica</strong>, sin importar la dirección. Siempre es mayor o igual a cero.</p>
 
-    <!-- TABS -->
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="suma">➕ 4.1 Suma de Enteros</button>
-      <button class="tab-btn"        data-tab="resta">➖ 4.2 Resta de Enteros</button>
+    <div class="def-box">
+      Se escribe con barras verticales: <strong>|n|</strong>. Si el número es positivo o cero, queda igual. Si es negativo, se "quita el signo".<br>
+      <span class="def-formula">|+7| = 7 &nbsp;&nbsp; |−7| = 7 &nbsp;&nbsp; |0| = 0</span>
     </div>
 
-    <!-- ── TAB: SUMA ── -->
-    <div class="tab-panel active" id="tab-suma">
+    <div class="va-grid">
+      <div class="va-card">
+        <div class="va-expr">|−9|</div>
+        <span class="va-arrow">↓</span>
+        <div class="va-result">9</div>
+        <div class="va-hint">Distancia de −9 al cero</div>
+      </div>
+      <div class="va-card">
+        <div class="va-expr">|+4|</div>
+        <span class="va-arrow">↓</span>
+        <div class="va-result">4</div>
+        <div class="va-hint">Distancia de +4 al cero</div>
+      </div>
+      <div class="va-card">
+        <div class="va-expr">|−15|</div>
+        <span class="va-arrow">↓</span>
+        <div class="va-result">15</div>
+        <div class="va-hint">El signo desaparece</div>
+      </div>
+      <div class="va-card">
+        <div class="va-expr">|0|</div>
+        <span class="va-arrow">↓</span>
+        <div class="va-result">0</div>
+        <div class="va-hint">El cero está en el cero</div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ══════════════════════════════════════
+     SECCIÓN 5 – OPERACIONES
+══════════════════════════════════════ -->
+<section id="operaciones">
+  <div class="section-wrap">
+    <span class="tag tag-orange">➕➖ Cálculos</span>
+    <h2 class="section-title">Operaciones con Enteros</h2>
+    <p class="section-sub">Aprende las reglas para sumar y restar. Elige la pestaña que quieras estudiar y luego pon a prueba lo que aprendiste.</p>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="suma"  role="tab" aria-selected="true"  aria-controls="tab-suma">➕ Suma</button>
+      <button class="tab-btn"        data-tab="resta" role="tab" aria-selected="false" aria-controls="tab-resta">➖ Resta</button>
+    </div>
+
+    <!-- TAB SUMA -->
+    <div class="tab-panel active" id="tab-suma" role="tabpanel">
       <div class="regla-box">
-        📌 <strong>Regla general de la suma:</strong><br><br>
-        • Si los dos números tienen el <strong>mismo signo</strong>: suma los valores absolutos y conserva el signo. <br>
-        &nbsp;&nbsp;&nbsp;Ej: <strong>(+3) + (+5) = +8</strong> · <strong>(−3) + (−5) = −8</strong><br><br>
-        • Si tienen <strong>signos diferentes</strong>: resta los valores absolutos y conserva el signo del mayor.<br>
-        &nbsp;&nbsp;&nbsp;Ej: <strong>(+7) + (−4) = +3</strong> · <strong>(−9) + (+2) = −7</strong>
+        <div class="rb-titulo">📌 Regla de la Suma</div>
+        <ul class="regla-steps">
+          <li>
+            <strong>Mismo signo → sumar y conservar</strong>
+            <div class="regla-ej-box">
+              (+3) + (+5) = +8 &nbsp;|&nbsp; (−3) + (−5) = −8
+            </div>
+          </li>
+          <li>
+            <strong>Diferente signo → restar (el mayor menos el menor) y usar el signo del mayor</strong>
+            <div class="regla-ej-box">
+              (+7) + (−4): 7−4=3, gana + → <strong>+3</strong><br>
+              (−9) + (+2): 9−2=7, gana − → <strong>−7</strong>
+            </div>
+          </li>
+        </ul>
       </div>
 
       <div class="ejemplos-ops">
-        <div class="op-card">
-          <div class="op-expr">(+4) + (+6)</div>
-          <div class="op-result pos-result">= +10</div>
-          <div class="op-hint">Mismo signo (+): suma y conserva</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(−3) + (−5)</div>
-          <div class="op-result neg-result">= −8</div>
-          <div class="op-hint">Mismo signo (−): suma y conserva</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(+8) + (−3)</div>
-          <div class="op-result pos-result">= +5</div>
-          <div class="op-hint">Diferente signo: resta, gana el +</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(−6) + (+6)</div>
-          <div class="op-result zero-result">= 0</div>
-          <div class="op-hint">Números opuestos: resultado cero</div>
-        </div>
+        <div class="op-card"><div class="op-expr">(+4) + (+6)</div><div class="op-result pos-result">= +10</div><div class="op-hint">Mismo signo (+): suma y conserva</div></div>
+        <div class="op-card"><div class="op-expr">(−3) + (−5)</div><div class="op-result neg-result">= −8</div><div class="op-hint">Mismo signo (−): suma y conserva</div></div>
+        <div class="op-card"><div class="op-expr">(+8) + (−3)</div><div class="op-result pos-result">= +5</div><div class="op-hint">Distinto signo: 8−3, gana +</div></div>
+        <div class="op-card"><div class="op-expr">(−6) + (+6)</div><div class="op-result zero-result">= 0</div><div class="op-hint">Opuestos: se anulan</div></div>
       </div>
 
       <div class="video-section">
-        <h3>🎬 Video explicativo – Suma de Enteros</h3>
+        <h3>🎬 Video explicativo</h3>
         <div class="video-wrap">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/EfsMlucTGXM?si=rpyktGeTSpT60V5P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/EfsMlucTGXM?si=rpyktGeTSpT60V5P" title="Suma de Números Enteros" allowfullscreen></iframe>
         </div>
       </div>
 
       <div class="ejercicios">
-        <h3>✏️ Ejercicios resueltos – haz clic para ver la solución</h3>
-        <div class="ej-item" data-answer="(+5)+(+3): mismos signos positivos → 5+3 = <span class='ans-highlight'>+8</span>">
+        <h3>✏️ Practica aquí (toca para ver la solución)</h3>
+        <div class="ej-item" data-answer="Signos iguales (+): sumamos 5 + 3 = 8 y conservamos el signo → <span class='ans-highlight'>+8</span>">
           <div class="ej-question">¿Cuánto es (+5) + (+3)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(−4)+(−7): mismos signos negativos → 4+7=11 → <span class='ans-highlight'>−11</span>">
+        <div class="ej-item" data-answer="Signos iguales (−): sumamos 4 + 7 = 11 y conservamos el signo → <span class='ans-highlight'>−11</span>">
           <div class="ej-question">¿Cuánto es (−4) + (−7)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(+9)+(−5): signos distintos → 9−5=4, gana el positivo → <span class='ans-highlight'>+4</span>">
+        <div class="ej-item" data-answer="Signos diferentes: restamos 9 − 5 = 4. El 9 es mayor y es positivo → <span class='ans-highlight'>+4</span>">
           <div class="ej-question">¿Cuánto es (+9) + (−5)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(−8)+(+3): signos distintos → 8−3=5, gana el negativo → <span class='ans-highlight'>−5</span>">
-          <div class="ej-question">¿Cuánto es (−8) + (+3)? <span class="ej-toggle">+</span></div>
+        <div class="ej-item" data-answer="Signos diferentes: restamos 6 − 2 = 4. El 6 es mayor y es negativo → <span class='ans-highlight'>−4</span>">
+          <div class="ej-question">¿Cuánto es (−6) + (+2)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
       </div>
     </div>
 
-    <!-- ── TAB: RESTA ── -->
-    <div class="tab-panel" id="tab-resta">
-
+    <!-- TAB RESTA -->
+    <div class="tab-panel" id="tab-resta" role="tabpanel">
       <div class="regla-box">
-        📌 <strong>Regla general de la resta:</strong><br><br>
-        Restar un entero es igual que <strong>sumar su opuesto</strong>. Convierte la resta en suma y cambia el signo del segundo número:<br><br>
-        &nbsp;&nbsp;&nbsp;<strong>a − b = a + (−b)</strong><br><br>
-        Ej: <strong>(+5) − (+8) = (+5) + (−8) = −3</strong><br>
-        Ej: <strong>(−3) − (−4) = (−3) + (+4) = +1</strong>
+        <div class="rb-titulo">📌 El Truco de la Resta</div>
+        <p style="margin-bottom:1rem;">Restar es lo mismo que <strong>sumar el opuesto</strong>. Cambia el signo del segundo número y aplica la regla de la suma.</p>
+        <ul class="regla-steps">
+          <li>
+            <strong>Paso 1:</strong> Convierte la resta en suma cambiando el signo del segundo número.
+            <div class="regla-ej-box">a − b &nbsp;=&nbsp; a + (−b)</div>
+          </li>
+          <li>
+            <strong>Paso 2:</strong> Aplica la regla de la suma (mismo o diferente signo).
+            <div class="regla-ej-box">
+              (+5) − (+8) → (+5) + (−8) = −3<br>
+              (−3) − (−4) → (−3) + (+4) = +1
+            </div>
+          </li>
+        </ul>
       </div>
 
       <div class="ejemplos-ops">
-        <div class="op-card">
-          <div class="op-expr">(+7) − (+4)</div>
-          <div class="op-result pos-result">= +3</div>
-          <div class="op-hint">7+(−4): gana el positivo</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(+3) − (+8)</div>
-          <div class="op-result neg-result">= −5</div>
-          <div class="op-hint">3+(−8): gana el negativo</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(−2) − (−5)</div>
-          <div class="op-result pos-result">= +3</div>
-          <div class="op-hint">(−2)+(+5): gana el positivo</div>
-        </div>
-        <div class="op-card">
-          <div class="op-expr">(−6) − (+2)</div>
-          <div class="op-result neg-result">= −8</div>
-          <div class="op-hint">(−6)+(−2): mismos signos</div>
-        </div>
+        <div class="op-card"><div class="op-expr">(+7) − (+4)</div><div class="op-result pos-result">= +3</div><div class="op-hint">(+7) + (−4)</div></div>
+        <div class="op-card"><div class="op-expr">(+3) − (+8)</div><div class="op-result neg-result">= −5</div><div class="op-hint">(+3) + (−8)</div></div>
+        <div class="op-card"><div class="op-expr">(−2) − (−5)</div><div class="op-result pos-result">= +3</div><div class="op-hint">(−2) + (+5)</div></div>
+        <div class="op-card"><div class="op-expr">(−6) − (+2)</div><div class="op-result neg-result">= −8</div><div class="op-hint">(−6) + (−2)</div></div>
       </div>
 
       <div class="video-section">
-        <h3>🎬 Video explicativo – Resta de Enteros</h3>
+        <h3>🎬 Video explicativo</h3>
         <div class="video-wrap">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/6MwdfLuIyNI?si=Qau1jYzGT_7quDhY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe src="https://www.youtube.com/embed/6MwdfLuIyNI?si=Qau1jYzGT_7quDhY" title="Resta de Números Enteros" allowfullscreen></iframe>
         </div>
       </div>
 
       <div class="ejercicios">
-        <h3>✏️ Ejercicios guiados – haz clic para ver la solución</h3>
-        <div class="ej-item" data-answer="(+10)−(+6) = (+10)+(−6): gana el positivo 10−6=4 → <span class='ans-highlight'>+4</span>">
+        <h3>✏️ Practica aquí (toca para ver la solución)</h3>
+        <div class="ej-item" data-answer="(+10) + (−6): signos diferentes, 10 − 6 = 4, gana + → <span class='ans-highlight'>+4</span>">
           <div class="ej-question">¿Cuánto es (+10) − (+6)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(−5)−(+3) = (−5)+(−3): mismos signos negativos 5+3=8 → <span class='ans-highlight'>−8</span>">
+        <div class="ej-item" data-answer="(−5) + (−3): signos iguales (−), 5 + 3 = 8, conserva el − → <span class='ans-highlight'>−8</span>">
           <div class="ej-question">¿Cuánto es (−5) − (+3)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(−4)−(−9) = (−4)+(+9): gana el positivo 9−4=5 → <span class='ans-highlight'>+5</span>">
+        <div class="ej-item" data-answer="(−4) + (+9): signos diferentes, 9 − 4 = 5, gana + → <span class='ans-highlight'>+5</span>">
           <div class="ej-question">¿Cuánto es (−4) − (−9)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
-        <div class="ej-item" data-answer="(+2)−(+11) = (+2)+(−11): gana el negativo 11−2=9 → <span class='ans-highlight'>−9</span>">
+        <div class="ej-item" data-answer="(+2) + (−11): signos diferentes, 11 − 2 = 9, gana − → <span class='ans-highlight'>−9</span>">
           <div class="ej-question">¿Cuánto es (+2) − (+11)? <span class="ej-toggle">+</span></div>
           <div class="ej-answer"></div>
         </div>
@@ -598,128 +814,189 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════
+     CTA FINAL → PRÁCTICA
+══════════════════════════════════════ -->
+<div class="cta-final">
+  <h2>🎉 ¡Teoría completada!</h2>
+  <p>Ya conoces los enteros, la recta numérica, el valor absoluto y las operaciones básicas. Hora de poner en práctica lo que aprendiste.</p>
+  <button class="btn-cta" onclick="navegarA('practica')">Ir a Práctica 🎮 →</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
 <script>
-/* ══ RECTA NUMÉRICA CANVAS INTERACTIVA ══ */
-(function(){
-  const canvas = document.getElementById('rectaCanvas');
-  const ctx    = canvas.getContext('2d');
-  const W=canvas.width, H=canvas.height;
-  const cx=W/2, cy=H/2-10, step=60;
-  const nums=[-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7];
-  let selected=null;
+  // ─── UTILIDAD: LEER localStorage ─────────────────────────────────────────
+  function leerLS(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+  function escribirLS(k,v) { try { localStorage.setItem(k,v); } catch(e){} }
 
-  function getColor(n){
-    if(n<0) return '#F4A127';
-    if(n===0) return '#2ECC8A';
-    return '#1A3C6E';
+  // ─── NAVEGACIÓN SEGURA ────────────────────────────────────────────────────
+  function navegarA(id) {
+    try {
+      if (window.parent && typeof window.parent.showPage === 'function') {
+        window.parent.showPage(id); return;
+      }
+    } catch(e) {}
+    window.parent.postMessage({ action: 'cambiarPagina', destino: id }, '*');
   }
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    // línea
-    ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(30,cy); ctx.lineTo(W-30,cy); ctx.stroke();
-    // flechas
-    [[30,1],[W-30,-1]].forEach(([x,d])=>{
-      ctx.beginPath();
-      ctx.moveTo(x-d*12,cy-5); ctx.lineTo(x,cy); ctx.lineTo(x-d*12,cy+5);
-      ctx.strokeStyle='#aaa'; ctx.lineWidth=1.5; ctx.stroke();
-    });
-    // puntos y etiquetas
-    nums.forEach(n=>{
-      const x=cx+n*step;
-      const isSelected=(selected===n);
-      const color=getColor(n);
-      // marca
-      ctx.strokeStyle=color; ctx.lineWidth=n===0?2.5:1.5;
-      ctx.beginPath(); ctx.moveTo(x,cy-6); ctx.lineTo(x,cy+6); ctx.stroke();
-      // punto
-      if(isSelected){
-        ctx.shadowColor=color; ctx.shadowBlur=14;
-      }
-      ctx.beginPath(); ctx.arc(x,cy,isSelected?11:8,0,Math.PI*2);
-      ctx.fillStyle=isSelected?color:'rgba(255,255,255,0.9)';
-      ctx.strokeStyle=color; ctx.lineWidth=2;
-      ctx.fill(); ctx.stroke();
-      ctx.shadowBlur=0;
-      // número
-      ctx.font=(isSelected?"bold 14px":"12px")+" 'Nunito',sans-serif";
-      ctx.fillStyle=isSelected?'#fff':color;
-      ctx.textAlign='center';
-      if(isSelected) ctx.fillText(n===0?'0':(n>0?'+'+n:n),x,cy+4);
-      ctx.font="12px 'Nunito',sans-serif";
-      ctx.fillStyle=color;
-      ctx.fillText(n===0?'0':(n>0?'+'+n:n),x,cy+28);
-    });
+  // ─── SISTEMA DE PROGRESO (interacciones) ─────────────────────────────────
+  let interacciones = 0;
+  const umbral = 4; // cantidad de interacciones para "completar" teoría
+  let teoriaCompletada = false;
+
+  function registrarInteraccion(tipo) {
+    if (teoriaCompletada) return;
+    interacciones++;
+    if (interacciones >= umbral) {
+      teoriaCompletada = true;
+      guardarTeoriaVista();
+    }
   }
 
-  // clic
-  canvas.style.cursor='pointer';
-  canvas.addEventListener('click',e=>{
-    const rect=canvas.getBoundingClientRect();
-    const scaleX=W/rect.width;
-    const mx=(e.clientX-rect.left)*scaleX;
-    const my=(e.clientY-rect.top)*(H/rect.height);
-    let hit=null;
-    nums.forEach(n=>{
-      const x=cx+n*step;
-      const dist=Math.sqrt((mx-x)**2+(my-cy)**2);
-      if(dist<16) hit=n;
-    });
-    if(hit!==null){
-      selected=hit;
-      const tipo=hit<0?'Entero NEGATIVO':hit===0?'El CERO':'Entero POSITIVO';
-      const abs=Math.abs(hit);
-      document.getElementById('clickInfo').innerHTML=
-        `✅ Seleccionaste <strong>${hit>=0?'+':'' }${hit}</strong> · ${tipo} · |${hit}| = ${abs}`;
-      draw();
+  function guardarTeoriaVista() {
+    const rawProg = leerLS("edu_progreso");
+    if (!rawProg) return;
+    try {
+      const p = JSON.parse(rawProg);
+      if (!p.teoriaVista) {
+        p.teoriaVista = true;
+        if (!p.seccionesVisitadas) p.seccionesVisitadas = [];
+        if (!p.seccionesVisitadas.includes('teoria')) p.seccionesVisitadas.push('teoria');
+        // +10 puntos por completar la teoría
+        p.practicaPuntaje = (p.practicaPuntaje || 0) + 10;
+        escribirLS("edu_progreso", JSON.stringify(p));
+        window.parent.postMessage({ action: 'actualizarPuntos' }, '*');
+        window.parent.postMessage({ action: 'seccionCompletada', destino: 'teoria' }, '*');
+      }
+    } catch(e) {}
+  }
+
+  // ─── BARRA DE PROGRESO DE LECTURA ─────────────────────────────────────────
+  window.addEventListener('scroll', () => {
+    const el = document.getElementById('read-progress');
+    if (!el) return;
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct   = total > 0 ? (window.scrollY / total) * 100 : 0;
+    el.style.width = pct + '%';
+    // Registrar interacción si llegó al 80% de la lectura
+    if (pct > 80) registrarInteraccion('scroll');
+  }, { passive: true });
+
+  // ─── RECTA NUMÉRICA INTERACTIVA ──────────────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('rectaCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W/2, cy = H/2 - 8, step = 52;
+    const nums = [-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8];
+    let selected = null;
+
+    const colorOf = n => n < 0 ? '#F4A127' : n === 0 ? '#2ECC8A' : '#1A3C6E';
+
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      // Línea
+      ctx.strokeStyle='#ccc'; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.moveTo(12,cy); ctx.lineTo(W-12,cy); ctx.stroke();
+      // Flechas
+      [[15,1],[W-15,-1]].forEach(([x,d]) => {
+        ctx.beginPath(); ctx.moveTo(x-(d*10),cy-5); ctx.lineTo(x,cy); ctx.lineTo(x-(d*10),cy+5);
+        ctx.strokeStyle='#bbb'; ctx.lineWidth=2; ctx.stroke();
+      });
+      // Puntos
+      nums.forEach(n => {
+        const x = cx + n*step, isSel = selected===n, c = colorOf(n);
+        ctx.strokeStyle=c; ctx.lineWidth = isSel ? 2.5 : 1.5;
+        ctx.beginPath(); ctx.moveTo(x,cy-7); ctx.lineTo(x,cy+7); ctx.stroke();
+        if(isSel){ ctx.shadowColor=c; ctx.shadowBlur=12; }
+        ctx.beginPath(); ctx.arc(x,cy, isSel?13:8, 0, Math.PI*2);
+        ctx.fillStyle = isSel ? c : '#fff';
+        ctx.strokeStyle=c; ctx.lineWidth=2;
+        ctx.fill(); ctx.stroke(); ctx.shadowBlur=0;
+        ctx.font = (isSel?'bold 14px':'12px')+' Nunito,sans-serif';
+        ctx.fillStyle = isSel ? '#fff' : '#666';
+        ctx.textAlign='center';
+        if(isSel) ctx.fillText(n>0?'+'+n:n, x, cy+5);
+        else       ctx.fillText(n>0?'+'+n:n, x, cy+27);
+      });
     }
-  });
 
-  draw();
-})();
-
-/* ══ TABS ══ */
-document.querySelectorAll('.tab-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
-  });
-});
-
-/* ══ ACORDEÓN EJERCICIOS ══ */
-document.querySelectorAll('.ej-item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    const wasOpen=item.classList.contains('open');
-    document.querySelectorAll('.ej-item').forEach(i=>{
-      i.classList.remove('open');
-      i.querySelector('.ej-answer').style.display='none';
-    });
-    if(!wasOpen){
-      item.classList.add('open');
-      const ans=item.querySelector('.ej-answer');
-      ans.innerHTML=item.dataset.answer;
-      ans.style.display='block';
-    }
-  });
-});
-
-/* ══ SCROLL OBSERVER TARJETAS ══ */
-(function(){
-  const cards=document.querySelectorAll('.ejemplo-card');
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const d=parseInt(e.target.dataset.delay)||0;
-        setTimeout(()=>e.target.classList.add('visible'),d);
-        obs.unobserve(e.target);
+    canvas.addEventListener('click', e => {
+      const rect = canvas.getBoundingClientRect();
+      const sx = W/rect.width, sy = H/rect.height;
+      const mx = (e.clientX-rect.left)*sx, my = (e.clientY-rect.top)*sy;
+      let hit = null;
+      nums.forEach(n => {
+        const x = cx+n*step;
+        if(Math.hypot(mx-x,my-cy) < 20) hit = n;
+      });
+      if(hit !== null){
+        selected = hit;
+        const abs = Math.abs(hit);
+        const tipo = hit > 0 ? 'Positivo' : hit < 0 ? 'Negativo' : 'Cero (neutro)';
+        const opp  = hit === 0 ? '0' : (hit > 0 ? '-'+hit : '+'+ abs);
+        const panel = document.getElementById('riptPanel');
+        panel.style.display = 'block';
+        panel.innerHTML = `
+          <span class="rip-valor">${hit > 0 ? '+'+hit : hit}</span>
+          <strong>Tipo:</strong> ${tipo} &nbsp;|&nbsp;
+          <strong>Valor absoluto:</strong> |${hit > 0 ? '+'+hit : hit}| = ${abs} &nbsp;|&nbsp;
+          <strong>Opuesto:</strong> ${opp}
+        `;
+        draw();
+        registrarInteraccion('recta');
       }
     });
-  },{threshold:0.2});
-  cards.forEach(c=>obs.observe(c));
-})();
+    draw();
+  })();
+
+  // ─── TABS ─────────────────────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+      registrarInteraccion('tab');
+    });
+  });
+
+  // ─── ACORDEÓN DE EJERCICIOS ───────────────────────────────────────────────
+  document.querySelectorAll('.ej-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.ej-item').forEach(i => {
+        i.classList.remove('open');
+        const a = i.querySelector('.ej-answer');
+        if(a) a.style.display='none';
+      });
+      if(!wasOpen){
+        item.classList.add('open');
+        const ans = item.querySelector('.ej-answer');
+        ans.innerHTML = item.dataset.answer;
+        ans.style.display = 'block';
+        registrarInteraccion('ejercicio');
+      }
+    });
+  });
+
+  // ─── SCROLL OBSERVER TARJETAS ─────────────────────────────────────────────
+  (function(){
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          const d = parseInt(e.target.dataset.delay||0);
+          setTimeout(() => e.target.classList.add('visible'), d);
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:.1});
+    document.querySelectorAll('.ejemplo-card').forEach(c => obs.observe(c));
+  })();
 </script>
+
 </body>
 </html>
