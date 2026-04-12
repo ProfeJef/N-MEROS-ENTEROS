@@ -136,7 +136,7 @@
     .navbar {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
       background: linear-gradient(90deg, var(--azul-oscuro) 0%, var(--azul-brillante) 100%);
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
       padding: 0 1.5rem; height: 66px;
       box-shadow: 0 4px 15px rgba(0,0,0,.25);
       border-bottom: 3px solid var(--verde-neon);
@@ -204,8 +204,8 @@
       display: flex; gap: .5rem; list-style: none;
       overflow-x: auto; white-space: nowrap;
       scrollbar-width: none;
-      margin-left: auto; padding-left: 1rem;
-      justify-content: flex-end; flex-grow: 1;
+      margin-left: 0; padding-left: 0;
+      justify-content: center;
     }
     .nav-links::-webkit-scrollbar { display: none; }
 
@@ -280,7 +280,7 @@
       position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;
       background: var(--azul-oscuro); height: 44px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 1.2rem;
+      padding: 0 max(1.2rem, calc(50vw - 550px)); /* Simetría perfecta limitando el ancho a 1100px */
       border-top: 1px solid rgba(255,255,255,.08);
       font-family: 'Nunito', sans-serif; font-size: .82rem;
     }
