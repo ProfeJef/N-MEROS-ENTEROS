@@ -3,321 +3,681 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Los Números Enteros</title>
+  <title>Los Números Enteros – Inicio</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"/>
-
   <style>
     :root {
-      --azul: #1A3C6E;
-      --verde: #2ECC8A;
+      --azul:    #1A3C6E;
+      --verde:   #2ECC8A;
       --naranja: #F4A127;
-      --fondo: #F9F9F6;
-      --texto: #2D2D2D;
-      --blanco: #FFFFFF;
+      --fondo:   #F9F9F6;
+      --texto:   #2D2D2D;
+      --blanco:  #FFFFFF;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Open Sans', sans-serif; background: var(--fondo); color: var(--texto); overflow-x: hidden; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--fondo);
+      color: var(--texto);
+      overflow-x: hidden;
+    }
 
-    /* NAVBAR */
-    nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--azul); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 62px; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
-    .nav-logo { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--blanco); font-size: 1.25rem; letter-spacing: 1px; }
-    .nav-logo span { color: var(--naranja); }
-    .nav-links { display: flex; gap: 0.4rem; list-style: none; }
-    .nav-links a { font-family: 'Nunito', sans-serif; font-weight: 600; color: rgba(255,255,255,0.85); text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.9rem; transition: background 0.25s, color 0.25s; }
-    .nav-links a:hover, .nav-links a.active { background: var(--verde); color: var(--azul); }
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d2448 0%, #1A3C6E 55%, #1a5276 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 4rem 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
 
-    /* HERO */
-    .hero { min-height: 100vh; background: linear-gradient(135deg, #0d2448 0%, #1A3C6E 55%, #1a5276 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 80px 2rem 3rem; position: relative; overflow: hidden; }
-
-    /* partículas de fondo */
+    /* Partículas flotantes */
     .hero-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .hero-particles span { position: absolute; border-radius: 50%; background: rgba(46,204,138,0.12); animation: floatBubble linear infinite; }
-    @keyframes floatBubble {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 0.6; }
-      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    .hero-particles span {
+      position: absolute;
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      color: rgba(46,204,138,.18);
+      animation: floatNum linear infinite;
+    }
+    @keyframes floatNum {
+      0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: .6; }
+      100% { transform: translateY(-12vh) rotate(20deg); opacity: 0; }
     }
 
-    .hero-badge { display: inline-block; background: rgba(244,161,39,0.18); border: 1.5px solid var(--naranja); color: var(--naranja); font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; padding: 0.35rem 1rem; border-radius: 30px; margin-bottom: 1.4rem; animation: fadeDown 0.7s ease forwards; opacity: 0; }
-    .hero h1 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(2.4rem, 6vw, 4.5rem); color: var(--blanco); line-height: 1.12; animation: fadeDown 0.9s 0.15s ease forwards; opacity: 0; }
-    .hero h1 .highlight { color: var(--verde); }
-    .hero-sub { font-family: 'Open Sans', sans-serif; color: rgba(255,255,255,0.72); font-size: clamp(1rem, 2.5vw, 1.2rem); max-width: 600px; margin: 1.2rem auto 0; animation: fadeDown 1s 0.3s ease forwards; opacity: 0; }
+    /* OBJETIVOS DE APRENDIZAJE (NUEVO) */
+    .hero-objetivos {
+      display: inline-flex; flex-wrap: wrap; justify-content: center;
+      gap: .55rem; margin-bottom: 1.6rem;
+      animation: fadeDown .7s ease forwards; opacity: 0;
+    }
+    .obj-pill {
+      background: rgba(46,204,138,.12);
+      border: 1.5px solid rgba(46,204,138,.35);
+      color: rgba(255,255,255,.85);
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .78rem;
+      padding: .28rem .9rem; border-radius: 20px;
+      display: flex; align-items: center; gap: .35rem;
+    }
+    .obj-pill::before { content: "✓"; color: var(--verde); font-weight: 900; }
 
-    /* recta numérica animada */
-    .number-line-wrap { margin: 2.4rem auto 0; animation: fadeDown 1.1s 0.45s ease forwards; opacity: 0; }
+    /* Badge de grado */
+    .hero-badge {
+      display: inline-block;
+      background: rgba(244,161,39,.18); border: 1.5px solid var(--naranja);
+      color: var(--naranja); font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: .82rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: .35rem 1rem; border-radius: 30px; margin-bottom: 1.2rem;
+      animation: fadeDown .5s ease forwards; opacity: 0;
+    }
+
+    .hero h1 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      color: var(--blanco); line-height: 1.1;
+      animation: fadeDown .9s .1s ease forwards; opacity: 0;
+    }
+    .hero h1 .highlight { color: var(--verde); }
+
+    .hero-sub {
+      color: rgba(255,255,255,.72); font-size: clamp(.95rem, 2.5vw, 1.15rem);
+      max-width: 580px; margin: 1rem auto 0; line-height: 1.7;
+      animation: fadeDown 1s .25s ease forwards; opacity: 0;
+    }
+
+    /* Recta numérica canvas */
+    .number-line-wrap {
+      margin: 2.2rem auto 0;
+      animation: fadeDown 1.1s .4s ease forwards; opacity: 0;
+    }
     .number-line-wrap canvas { display: block; max-width: 100%; }
 
-    /* botones CTA */
-    .cta-group { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 2.2rem; animation: fadeDown 1.2s 0.6s ease forwards; opacity: 0; }
-    .btn { font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem; padding: 0.75rem 2rem; border-radius: 40px; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; display: inline-block; }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.22); }
+    /* Indicador de progreso personal (NUEVO) */
+    .hero-progress {
+      display: none; /* se muestra por JS si hay datos */
+      flex-direction: column; align-items: center; gap: .5rem;
+      margin-top: 1.8rem;
+      animation: fadeDown 1.15s .45s ease forwards; opacity: 0;
+    }
+    .hero-progress-label {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .8rem;
+      color: rgba(255,255,255,.55); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .hero-progress-track {
+      width: 220px; height: 8px;
+      background: rgba(255,255,255,.12); border-radius: 10px; overflow: hidden;
+    }
+    .hero-progress-fill {
+      height: 100%; background: var(--verde); border-radius: 10px;
+      transition: width .7s ease; width: 0%;
+    }
+    .hero-progress-steps {
+      display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center;
+    }
+    .h-step {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .78rem;
+      padding: .25rem .8rem; border-radius: 20px;
+      border: 1.5px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.45);
+      transition: all .3s;
+    }
+    .h-step.done   { background: var(--verde);   border-color: var(--verde);   color: var(--azul); }
+    .h-step.active { background: var(--naranja);  border-color: var(--naranja); color: var(--blanco); }
+
+    /* CTA */
+    .cta-group {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      margin-top: 2rem;
+      animation: fadeDown 1.2s .55s ease forwards; opacity: 0;
+    }
+    .btn {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
+      padding: .75rem 2rem; border-radius: 40px; border: none; cursor: pointer;
+      transition: transform .2s, box-shadow .2s; text-decoration: none;
+      display: inline-flex; align-items: center; gap: .5rem; position: relative;
+      overflow: hidden;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.22); }
     .btn-primary { background: var(--verde); color: var(--azul); }
-    .btn-outline { background: transparent; color: var(--blanco); border: 2px solid rgba(255,255,255,0.5); }
+    .btn-outline  { background: transparent; color: var(--blanco); border: 2px solid rgba(255,255,255,.45); }
     .btn-outline:hover { border-color: var(--naranja); color: var(--naranja); }
 
-    /* scroll indicator */
-    .scroll-hint { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.4); font-size: 0.8rem; font-family: 'Nunito', sans-serif; font-weight: 600; letter-spacing: 1px; animation: bounce 2s infinite; }
-    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,.35); font-size: .78rem;
+      font-family: 'Nunito', sans-serif; font-weight: 600; letter-spacing: 1px;
+      animation: bounce 2.2s infinite; pointer-events: none;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(-8px); }
+    }
 
-    /* SECCIÓN DE TARJETAS (vista previa del sitio) */
-    .cards-section { background: var(--fondo); padding: 5rem 2rem; text-align: center; }
-    .cards-section h2 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(1.7rem, 4vw, 2.4rem); color: var(--azul); margin-bottom: 0.5rem; }
-    .cards-section p { color: #666; font-size: 1rem; margin-bottom: 2.5rem; }
+    /* ══════════════════════════════
+       SECCIÓN RUTA DE APRENDIZAJE (NUEVO)
+    ══════════════════════════════ */
+    .ruta-section {
+      background: var(--blanco);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      border-bottom: 3px solid rgba(46,204,138,.15);
+    }
+    .ruta-section h2 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(1.5rem,3.5vw,2rem); color: var(--azul); margin-bottom: .4rem;
+    }
+    .ruta-section p { color: #777; font-size: .95rem; margin-bottom: 2rem; }
 
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
-    .card { background: var(--blanco); border-radius: 16px; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07); transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; opacity: 0; transform: translateY(30px); }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
-    .card.visible { animation: riseUp 0.6s ease forwards; }
+    .ruta-steps {
+      display: flex; justify-content: center; align-items: center;
+      flex-wrap: wrap; gap: 0; max-width: 800px; margin: 0 auto;
+    }
+    .ruta-item {
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      width: 140px;
+    }
+    .ruta-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--azul); color: var(--blanco);
+      font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 14px rgba(26,60,110,.25);
+      transition: transform .2s; cursor: pointer;
+    }
+    .ruta-num:hover { transform: scale(1.12); }
+    .ruta-num.done { background: var(--verde); color: var(--azul); }
+    .ruta-label {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      color: var(--azul); font-size: .85rem;
+    }
+    .ruta-sublabel { font-size: .75rem; color: #999; }
+    .ruta-arrow {
+      font-size: 1.4rem; color: rgba(26,60,110,.2);
+      margin: 0 -.4rem; flex-shrink: 0;
+    }
+
+    /* ══════════════════════════════
+       TARJETAS
+    ══════════════════════════════ */
+    .cards-section { background: var(--fondo); padding: 4rem 2rem; text-align: center; }
+    .cards-section h2 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(1.6rem,4vw,2.2rem); color: var(--azul); margin-bottom: .4rem;
+    }
+    .cards-section > p { color: #777; font-size: .97rem; margin-bottom: 2.5rem; }
+
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.4rem; max-width: 1000px; margin: 0 auto;
+    }
+    .card {
+      background: var(--blanco); border-radius: 16px; padding: 1.8rem 1.4rem;
+      text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.07);
+      transition: transform .25s, box-shadow .25s; cursor: pointer;
+      opacity: 0; transform: translateY(28px);
+      border-top: 4px solid transparent;
+    }
+    .card:hover  { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,.12); }
+    .card.visible{ animation: riseUp .6s ease forwards; }
     @keyframes riseUp { to { opacity: 1; transform: translateY(0); } }
-    .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .card h3 { font-family: 'Nunito', sans-serif; font-weight: 700; color: var(--azul); font-size: 1.1rem; margin-bottom: 0.5rem; }
-    .card p { font-size: 0.88rem; color: #777; line-height: 1.5; }
-    .card-tag { display: inline-block; margin-top: 1rem; background: #edf7f2; color: var(--verde); font-size: 0.75rem; font-weight: 700; font-family: 'Nunito', sans-serif; padding: 0.25rem 0.75rem; border-radius: 20px; }
 
-    /* BANNER MOTIVACIONAL */
-    .motivational { background: linear-gradient(90deg, var(--verde) 0%, #1abc9c 100%); padding: 3rem 2rem; text-align: center; }
-    .motivational h2 { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--azul); margin-bottom: 0.5rem; }
-    .motivational p { color: rgba(26,60,110,0.75); font-size: 1rem; }
+    .card.c-teoria     { border-top-color: var(--azul); }
+    .card.c-practica   { border-top-color: var(--verde); }
+    .card.c-evaluacion { border-top-color: var(--naranja); }
+    .card.c-vida       { border-top-color: #9b59b6; }
+    .card.c-recursos   { border-top-color: #e74c3c; }
 
-    /* FOOTER */
-    footer { background: var(--azul); color: rgba(255,255,255,0.6); text-align: center; padding: 1.5rem; font-family: 'Nunito', sans-serif; font-size: 0.85rem; }
+    .card-icon { font-size: 2.4rem; margin-bottom: .9rem; }
+    .card h3 {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      color: var(--azul); font-size: 1.05rem; margin-bottom: .45rem;
+    }
+    .card p { font-size: .85rem; color: #777; line-height: 1.55; }
+    .card-tag {
+      display: inline-block; margin-top: .9rem;
+      background: #edf7f2; color: var(--verde);
+      font-size: .72rem; font-weight: 700; font-family: 'Nunito', sans-serif;
+      padding: .22rem .75rem; border-radius: 20px;
+    }
+    /* Badge de estado en tarjeta */
+    .card-estado {
+      display: none; /* Se muestra por JS */
+      margin-top: .6rem; font-size: .75rem;
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+    }
+
+    /* ══════════════════════════════
+       DATO CURIOSO
+    ══════════════════════════════ */
+    .curiosidad-section {
+      background: linear-gradient(90deg, var(--verde) 0%, #1abc9c 100%);
+      padding: 2.8rem 2rem; text-align: center;
+    }
+    .curiosidad-section h2 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      font-size: clamp(1.4rem,4vw,2rem); color: var(--azul); margin-bottom: .5rem;
+    }
+    .curiosidad-section p { color: rgba(26,60,110,.8); font-size: .97rem; max-width: 600px; margin: 0 auto; }
+
+    /* ══════════════════════════════
+       REFLEXIÓN FINAL (NUEVO)
+    ══════════════════════════════ */
+    .reflexion-section {
+      background: var(--fondo); padding: 3rem 2rem; text-align: center;
+    }
+    .reflexion-section h3 {
+      font-family: 'Nunito', sans-serif; font-weight: 900;
+      color: var(--azul); font-size: 1.2rem; margin-bottom: 1rem;
+    }
+    .reflexion-preguntas {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+      max-width: 800px; margin: 0 auto;
+    }
+    .ref-pill {
+      background: var(--blanco); border-radius: 12px;
+      padding: .9rem 1.2rem; font-size: .9rem; color: var(--texto);
+      box-shadow: 0 2px 10px rgba(0,0,0,.07);
+      border-left: 4px solid var(--naranja);
+      text-align: left; max-width: 360px; line-height: 1.55;
+    }
+
+    /* FOOTER interno (solo si se ve fuera de iframe) */
+    footer {
+      background: var(--azul); color: rgba(255,255,255,.55);
+      text-align: center; padding: 1.2rem;
+      font-family: 'Nunito', sans-serif; font-size: .82rem;
+    }
     footer span { color: var(--naranja); font-weight: 700; }
 
-    /* ANIMACIONES GENERALES */
-    @keyframes fadeDown { from { opacity: 0; transform: translateY(-22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-    /* RESPONSIVE */
     @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 2rem; }
+      .ruta-arrow { display: none; }
+      .ruta-item { width: 80px; }
+      .ruta-num  { width: 44px; height: 44px; font-size: .95rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="hero-particles" id="particles"></div>
-    <div class="hero-badge">Matemáticas | Grado 7</div>
-    <h1>Los <span class="highlight">Números<br>Enteros</span></h1>
-    <p class="hero-sub">¡Descubre el mundo de los números positivos, negativos y el cero. Aprende con teoría, juegos y situaciones de la vida real!</p>
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero" id="inicio" aria-label="Presentación del módulo">
+  <div class="hero-particles" id="particles" aria-hidden="true"></div>
 
-    <!-- Recta numérica animada en Canvas -->
-    <div class="number-line-wrap">
-      <canvas id="numberLine" width="700" height="100"></canvas>
+  <div class="hero-badge" aria-label="Nivel educativo">📐 Matemáticas · Grado 7°</div>
+
+  <!-- OBJETIVOS DE APRENDIZAJE (visible desde el inicio) -->
+  <div class="hero-objetivos" role="list" aria-label="Objetivos de aprendizaje">
+    <div class="obj-pill" role="listitem">Identificar los enteros en ℤ</div>
+    <div class="obj-pill" role="listitem">Ubicarlos en la recta numérica</div>
+    <div class="obj-pill" role="listitem">Sumar y restar con la ley de signos</div>
+    <div class="obj-pill" role="listitem">Aplicarlos en contextos reales</div>
+  </div>
+
+  <h1>Los <span class="highlight">Números<br>Enteros</span></h1>
+
+  <p class="hero-sub" id="hero-saludo">
+    Descubre el mundo de los números positivos, negativos y el cero.
+    Aprende con teoría, juegos y situaciones de la vida real.
+  </p>
+
+  <!-- Recta numérica -->
+  <div class="number-line-wrap" aria-hidden="true">
+    <canvas id="numberLine" width="700" height="100"></canvas>
+  </div>
+
+  <!-- Progreso del estudiante -->
+  <div class="hero-progress" id="heroProgress">
+    <span class="hero-progress-label">Tu progreso en el módulo</span>
+    <div class="hero-progress-track">
+      <div class="hero-progress-fill" id="heroProgressFill"></div>
+    </div>
+    <div class="hero-progress-steps" id="heroProgressSteps">
+      <span class="h-step" id="hstep-teoria">🧠 Teoría</span>
+      <span class="h-step" id="hstep-practica">🎮 Práctica</span>
+      <span class="h-step" id="hstep-evaluacion">🏆 Evaluación</span>
+      <span class="h-step" id="hstep-recursos">🎒 Recursos</span>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-group">
+    <button class="btn btn-primary" id="btnEmpezar" aria-label="Ir a la sección de Teoría">🧠 Empezar por la Teoría</button>
+    <button class="btn btn-outline"  id="btnPractica" aria-label="Ir directamente a la Práctica">🎮 Ir a Práctica</button>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">DESPLÁZATE ↓</div>
+</section>
+
+<!-- ══════════════════════════════════════
+     RUTA DE APRENDIZAJE
+══════════════════════════════════════ -->
+<section class="ruta-section" aria-label="Ruta de aprendizaje del módulo">
+  <h2>🗺️ Tu Ruta de Aprendizaje</h2>
+  <p>Sigue este camino para dominar los números enteros paso a paso.</p>
+
+  <div class="ruta-steps" role="list">
+    <div class="ruta-item" role="listitem" onclick="navegarA('teoria')" title="Ir a Teoría">
+      <div class="ruta-num" id="rnum-teoria">🧠</div>
+      <span class="ruta-label">Teoría</span>
+      <span class="ruta-sublabel">Conceptos base</span>
+    </div>
+    <div class="ruta-arrow" aria-hidden="true">›</div>
+    <div class="ruta-item" role="listitem" onclick="navegarA('practica')" title="Ir a Práctica">
+      <div class="ruta-num" id="rnum-practica">🎮</div>
+      <span class="ruta-label">Práctica</span>
+      <span class="ruta-sublabel">Ejercicios y Kahoot</span>
+    </div>
+    <div class="ruta-arrow" aria-hidden="true">›</div>
+    <div class="ruta-item" role="listitem" onclick="navegarA('evaluacion')" title="Ir a Evaluación">
+      <div class="ruta-num" id="rnum-evaluacion">🏆</div>
+      <span class="ruta-label">Evaluación</span>
+      <span class="ruta-sublabel">Quiz cronometrado</span>
+    </div>
+    <div class="ruta-arrow" aria-hidden="true">›</div>
+    <div class="ruta-item" role="listitem" onclick="navegarA('recursos')" title="Ir a Recursos">
+      <div class="ruta-num" id="rnum-recursos">🎒</div>
+      <span class="ruta-label">Recursos</span>
+      <span class="ruta-sublabel">Videos y más</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     TARJETAS DE SECCIONES
+══════════════════════════════════════ -->
+<section class="cards-section" id="contenido" aria-label="Secciones del módulo">
+  <h2>¿Qué vas a aprender?</h2>
+  <p>Explora las 5 secciones del sitio y domina los números enteros paso a paso.</p>
+
+  <div class="cards-grid" id="cardsGrid">
+
+    <div class="card c-teoria" data-delay="0" data-nav="teoria" role="button" tabindex="0" aria-label="Ir a Teoría">
+      <div class="card-icon">📖</div>
+      <h3 id="card-h-teoria">Teoría</h3>
+      <p>Concepto, recta numérica y valor absoluto con explicaciones claras.</p>
+      <span class="card-tag">Comprender</span>
+      <div class="card-estado" id="estado-teoria"></div>
     </div>
 
-    <div class="cta-group">
-      <a href="#contenido" class="btn btn-primary">¡Empieza aquí!</a>
-      <a onclick="window.parent.showPage('practica')" class="btn btn-outline" style="cursor: pointer;">Ir a Práctica</a>
+    <div class="card c-practica" data-delay="100" data-nav="practica" role="button" tabindex="0" aria-label="Ir a Práctica">
+      <div class="card-icon">🎮</div>
+      <h3 id="card-h-practica">Práctica</h3>
+      <p>Actividades interactivas, Kahoot, ejercicios y problemas contextualizados.</p>
+      <span class="card-tag">Aplicar</span>
+      <div class="card-estado" id="estado-practica"></div>
     </div>
 
-    <div class="scroll-hint">DESPLÁZATE ↓</div>
-  </section>
-
-  <!-- CARDS -->
-  <section class="cards-section" id="contenido">
-    <h2>¿Qué vas a aprender?</h2>
-    <p>Explora las 5 secciones del sitio y domina los números enteros paso a paso.</p>
-
-    <div class="cards-grid" id="cardsGrid">
-      <div class="card" data-delay="0" onclick="window.parent.showPage('teoria')" style="cursor: pointer;" title="Ir a Teoría">
-        <div class="card-icon">📖</div>
-        <h3>Teoría</h3>
-        <p>Concepto, recta numérica y valor absoluto con explicaciones claras.</p>
-        <span class="card-tag">Comprender</span>
-      </div>
-      <div class="card" data-delay="100" onclick="window.parent.showPage('practica')" style="cursor: pointer;" title="Ir a Práctica">
-        <div class="card-icon">🎮</div>
-        <h3>Práctica</h3>
-        <p>Actividades interactivas con Genially y Liveworksheets para ejercitar.</p>
-        <span class="card-tag">Aplicar</span>
-      </div>
-      <div class="card" data-delay="200" onclick="window.parent.showPage('evaluacion')" style="cursor: pointer;" title="Ir a Evaluación">
-        <div class="card-icon">✅</div>
-        <h3>Evaluación</h3>
-        <p>Quiz cronometrado con retroalimentación inmediata y puntaje.</p>
-        <span class="card-tag">Evaluar</span>
-      </div>
-      <div class="card" data-delay="300" onclick="window.open('vida_real.html', '_blank')" style="cursor: pointer;" title="Abrir interactivos de la vida real">
-        <div class="card-icon">🌍</div>
-        <h3>Vida Real</h3>
-        <p>Finanzas, temperaturas y altitudes: los enteros en tu día a día.</p>
-        <span class="card-tag">Contextualizar</span>
-      </div>
-      <div class="card" data-delay="400" onclick="window.parent.showPage('recursos')" style="cursor: pointer;" title="Ir a Recursos">
-        <div class="card-icon">🎒</div>
-        <h3>Recursos Extra</h3>
-        <p>Videos, GeoGebra y Kahoot para ampliar y repasar cuando quieras.</p>
-        <span class="card-tag">Ampliar</span>
-      </div>
+    <div class="card c-evaluacion" data-delay="200" data-nav="evaluacion" role="button" tabindex="0" aria-label="Ir a Evaluación">
+      <div class="card-icon">✅</div>
+      <h3 id="card-h-evaluacion">Evaluación</h3>
+      <p>Quiz cronometrado con retroalimentación inmediata y puntaje.</p>
+      <span class="card-tag">Evaluar</span>
+      <div class="card-estado" id="estado-evaluacion"></div>
     </div>
-  </section>
 
-  <!-- BANNER MOTIVACIONAL -->
-  <section class="motivational">
-    <h2>💡 ¿Sabías que...?</h2>
-    <p>Los números negativos se usaron por primera vez en la China antigua hace más de 2.000 años para registrar deudas. ¡Ya los usabas sin saberlo!</p>
-  </section>
+    <div class="card c-vida" data-delay="300" data-nav="vida_real" role="button" tabindex="0" aria-label="Abrir Vida Real">
+      <div class="card-icon">🌍</div>
+      <h3>Vida Real</h3>
+      <p>Finanzas, temperaturas y altitudes: los enteros en tu día a día.</p>
+      <span class="card-tag">Contextualizar</span>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; 2026 Eduquémonos con TICs. Creado con <span>♥</span> para aprender.</p>
-  </footer>
+    <div class="card c-recursos" data-delay="400" data-nav="recursos" role="button" tabindex="0" aria-label="Ir a Recursos">
+      <div class="card-icon">🎒</div>
+      <h3>Recursos Extra</h3>
+      <p>Videos, GeoGebra y Kahoot para ampliar y repasar cuando quieras.</p>
+      <span class="card-tag">Ampliar</span>
+    </div>
 
-  <script>
-    // 1. PARTÍCULAS FLOTANTES EN EL HERO
-    function createParticles() {
-      const container = document.getElementById('particles');
-      const symbols = ['-3', '+2', '0', '-1', '+5', 'n', '±', '-7', '+4', '-2'];
-      const count = 22;
-      for (let i = 0; i < count; i++) {
-        const el = document.createElement('span');
-        const size = Math.random() * 38 + 14;
-        el.style.cssText = `
-          width:${size}px; height:${size}px; left:${Math.random()*100}%;
-          font-family:'Nunito',sans-serif; font-weight:900; font-size:${size * 0.55}px;
-          line-height:${size}px; text-align:center; color:rgba(46,204,138,0.35);
-          background:transparent; border-radius:0;
-          animation-duration:${Math.random()*14+8}s; animation-delay:${Math.random()*8}s;
-        `;
-        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        container.appendChild(el);
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     DATO CURIOSO
+══════════════════════════════════════ -->
+<section class="curiosidad-section" aria-label="Dato curioso sobre los números enteros">
+  <h2>💡 ¿Sabías que...?</h2>
+  <p>Los números negativos se usaron por primera vez en la <strong>China antigua hace más de 2.000 años</strong> para registrar deudas en varillas de bambú. ¡Ya los usabas sin saberlo!</p>
+</section>
+
+<!-- ══════════════════════════════════════
+     PREGUNTAS DE REFLEXIÓN (NUEVO)
+══════════════════════════════════════ -->
+<section class="reflexion-section" aria-label="Preguntas de reflexión">
+  <h3>🤔 Antes de empezar, piensa en esto...</h3>
+  <div class="reflexion-preguntas">
+    <div class="ref-pill">¿En qué momentos de tu vida has escuchado o usado números negativos?</div>
+    <div class="ref-pill">¿Qué crees que significa que un número sea "más negativo" que otro?</div>
+    <div class="ref-pill">Si un banco te presta $50.000 y tú solo tienes $10.000, ¿qué número entero representaría tu saldo?</div>
+  </div>
+</section>
+
+<!-- Footer (solo visible fuera de iframe) -->
+<footer>
+  <p>&copy; 2026 <span>Eduquémonos con TICs</span> · Creado con ♥ para aprender matemáticas</p>
+</footer>
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
+<script>
+  // ─── UTILIDAD: LEER LOCALSTORAGE SIN CRASH ─────────────────────────────────
+  function leerLS(key) { try { return localStorage.getItem(key); } catch(e) { return null; } }
+
+  // ─── NAVEGACIÓN SEGURA HACIA EL INDEX ─────────────────────────────────────
+  function navegarA(id) {
+    try {
+      if (window.parent && typeof window.parent.showPage === 'function') {
+        window.parent.showPage(id); return;
       }
+    } catch(e) {}
+    window.parent.postMessage({ action: 'cambiarPagina', destino: id }, '*');
+  }
+
+  // ─── PERSONALIZACIÓN Y PROGRESO ───────────────────────────────────────────
+  function cargarDatosEstudiante() {
+    const nombre    = leerLS('edu_estudiante') || null;
+    const rawProg   = leerLS('edu_progreso');
+    const progreso  = rawProg ? JSON.parse(rawProg) : null;
+
+    // Saludo personalizado
+    const saludo = document.getElementById('hero-saludo');
+    if (nombre && saludo) {
+      saludo.innerHTML = `¡Hola, <strong>${nombre}</strong>! 👋 Descubre el mundo de los números positivos, negativos y el cero. Aprende con teoría, juegos y situaciones reales.`;
     }
 
-    // 2. RECTA NUMÉRICA ANIMADA EN CANVAS
-    function drawNumberLine() {
-      const canvas = document.getElementById('numberLine');
-      if(!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const W = canvas.width, H = canvas.height;
-      const cx = W / 2, cy = H / 2;
-      const step = 56; // px entre números
-      const nums = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
-      let frame = 0;
-      let dotPos = -6; 
-      let dotTarget = 4;
-      let dotX = cx + dotPos * step;
-      let targetX = cx + dotTarget * step;
+    if (!progreso) return;
 
-      function draw(timestamp) {
-        ctx.clearRect(0, 0, W, H);
+    // ── Barra de progreso en el hero ──
+    const ETAPAS = ['teoria','practica','evaluacion','recursos'];
+    const visitadas = progreso.seccionesVisitadas || [];
+    const hechas = ETAPAS.filter(e => visitadas.includes(e)).length;
+    const pct = Math.round((hechas / ETAPAS.length) * 100);
 
-        // línea principal
-        ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-        ctx.lineWidth = 2;
+    if (hechas > 0 || progreso.practicaPuntaje > 0) {
+      const wrap = document.getElementById('heroProgress');
+      const fill = document.getElementById('heroProgressFill');
+      if (wrap) { wrap.style.display = 'flex'; wrap.style.opacity = '1'; }
+      if (fill) fill.style.width = pct + '%';
+
+      ETAPAS.forEach(e => {
+        const el = document.getElementById('hstep-' + e);
+        if (!el) return;
+        if (visitadas.includes(e)) el.classList.add('done');
+        else if (e === ETAPAS.find(x => !visitadas.includes(x))) el.classList.add('active');
+      });
+
+      // Actualizar numeritos de ruta
+      ETAPAS.forEach(e => {
+        const rnum = document.getElementById('rnum-' + e);
+        if (rnum && visitadas.includes(e)) rnum.classList.add('done');
+      });
+    }
+
+    // ── Estados en tarjetas ──
+    if (visitadas.includes('teoria')) {
+      mostrarEstadoCard('estado-teoria', '✅ Ya la visitaste');
+    }
+    if (progreso.practicaPuntaje > 0) {
+      mostrarEstadoCard('estado-practica', `⭐ ${progreso.practicaPuntaje} puntos acumulados`);
+    }
+    if (progreso.evaluacionAprobada) {
+      mostrarEstadoCard('estado-evaluacion', '🏆 ¡Evaluación aprobada!');
+    }
+  }
+
+  function mostrarEstadoCard(id, texto) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = 'block';
+    el.style.color   = '#2ECC8A';
+    el.textContent   = texto;
+  }
+
+  // ─── PARTÍCULAS FLOTANTES ─────────────────────────────────────────────────
+  function createParticles() {
+    const container = document.getElementById('particles');
+    const symbols   = ['-3','+2','0','-1','+5','±','-7','+4','-2','+8'];
+    for (let i = 0; i < 20; i++) {
+      const el   = document.createElement('span');
+      const size = Math.random() * 36 + 14;
+      el.style.cssText = `
+        left:${Math.random()*100}%;
+        font-size:${size}px; font-weight:900;
+        animation-duration:${Math.random()*16+10}s;
+        animation-delay:${Math.random()*9}s;
+      `;
+      el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      container.appendChild(el);
+    }
+  }
+
+  // ─── RECTA NUMÉRICA CANVAS ────────────────────────────────────────────────
+  function drawNumberLine() {
+    const canvas = document.getElementById('numberLine');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2, step = 56;
+    const nums = [-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6];
+    let dotX = cx - 6*step, targetX = cx + 4*step;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      // Línea base
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(20, cy); ctx.lineTo(W-20, cy); ctx.stroke();
+      // Flechas
+      [[20,1],[W-20,-1]].forEach(([x,d]) => {
         ctx.beginPath();
-        ctx.moveTo(20, cy);
-        ctx.lineTo(W - 20, cy);
-        ctx.stroke();
-
-        // flechas en extremos
-        [20, W - 20].forEach((x, i) => {
-          ctx.beginPath();
-          if (i === 0) { ctx.moveTo(x+10,cy-6); ctx.lineTo(x,cy); ctx.lineTo(x+10,cy+6); }
-          else { ctx.moveTo(x-10,cy-6); ctx.lineTo(x,cy); ctx.lineTo(x-10,cy+6); }
-          ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-          ctx.lineWidth = 2;
-          ctx.stroke();
-        });
-
-        // marcas y etiquetas
-        nums.forEach(n => {
-          const x = cx + n * step;
-          ctx.strokeStyle = (n === 0) ? 'rgba(46,204,138,0.9)' : 'rgba(255,255,255,0.5)';
-          ctx.lineWidth = (n === 0) ? 2.5 : 1.5;
-          ctx.beginPath();
-          ctx.moveTo(x, cy - 8);
-          ctx.lineTo(x, cy + 8);
-          ctx.stroke();
-
-          ctx.font = (n === 0) ? 'bold 15px Nunito,sans-serif' : '13px Nunito,sans-serif';
-          ctx.fillStyle = (n === 0) ? 'rgba(244,161,39,0.9)' : (n > 0 ? '#2ECC8A' : 'rgba(255,255,255,0.85)');
-          ctx.textAlign = 'center';
-          ctx.fillText(n > 0 ? '+'+n : n, x, cy + 26);
-        });
-
-        // punto animado
-        dotX += (targetX - dotX) * 0.04;
-        if (Math.abs(dotX - targetX) < 1) {
-          dotTarget = nums[Math.floor(Math.random() * nums.length)];
-          targetX = cx + dotTarget * step;
-        }
-
-        // sombra del punto
-        ctx.shadowColor = '#2ECC8A';
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.arc(dotX, cy, 10, 0, Math.PI * 2);
-        ctx.fillStyle = '#2ECC8A';
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // etiqueta dinámica sobre el punto
-        const currentNum = Math.round((dotX - cx) / step);
-        ctx.font = 'bold 13px Nunito,sans-serif';
-        ctx.fillStyle = '#ffffff';
+        ctx.moveTo(x+10*d,cy-6); ctx.lineTo(x,cy); ctx.lineTo(x+10*d,cy+6);
+        ctx.strokeStyle = 'rgba(255,255,255,0.45)'; ctx.lineWidth = 2; ctx.stroke();
+      });
+      // Marcas
+      nums.forEach(n => {
+        const x = cx + n*step;
+        ctx.strokeStyle = n===0 ? 'rgba(46,204,138,.9)' : 'rgba(255,255,255,.4)';
+        ctx.lineWidth = n===0 ? 2.5 : 1.5;
+        ctx.beginPath(); ctx.moveTo(x,cy-8); ctx.lineTo(x,cy+8); ctx.stroke();
+        ctx.font = n===0 ? 'bold 15px Nunito,sans-serif' : '13px Nunito,sans-serif';
+        ctx.fillStyle = n===0 ? 'rgba(244,161,39,.9)' : n>0 ? '#2ECC8A' : 'rgba(255,255,255,.8)';
         ctx.textAlign = 'center';
-        ctx.fillText(currentNum > 0 ? '+'+currentNum : currentNum, dotX, cy - 18);
-
-        frame++;
-        requestAnimationFrame(draw);
+        ctx.fillText(n>0 ? '+'+n : n, x, cy+26);
+      });
+      // Punto animado
+      dotX += (targetX - dotX) * 0.04;
+      if (Math.abs(dotX - targetX) < 1) {
+        targetX = cx + nums[Math.floor(Math.random()*nums.length)]*step;
       }
+      ctx.shadowColor = '#2ECC8A'; ctx.shadowBlur = 14;
+      ctx.beginPath(); ctx.arc(dotX, cy, 10, 0, Math.PI*2);
+      ctx.fillStyle = '#2ECC8A'; ctx.fill(); ctx.shadowBlur = 0;
+      // Etiqueta sobre el punto
+      const cur = Math.round((dotX-cx)/step);
+      ctx.font = 'bold 13px Nunito,sans-serif';
+      ctx.fillStyle = '#ffffff'; ctx.textAlign = 'center';
+      ctx.fillText(cur>0?'+'+cur:cur, dotX, cy-18);
       requestAnimationFrame(draw);
     }
+    requestAnimationFrame(draw);
+  }
 
-    // 3. ANIMACIÓN SCROLL PARA LAS TARJETAS
-    function initCardObserver() {
-      const cards = document.querySelectorAll('.card');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const delay = parseInt(entry.target.dataset.delay) || 0;
-            setTimeout(() => {
-              entry.target.classList.add('visible');
-            }, delay);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
+  // ─── OBSERVER PARA TARJETAS ──────────────────────────────────────────────
+  function initCardObserver() {
+    const cards = document.querySelectorAll('.card');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.delay) || 0;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    cards.forEach(c => obs.observe(c));
+  }
 
-      cards.forEach(card => observer.observe(card));
-    }
+  // ─── NAVEGACIÓN DESDE TARJETAS ──────────────────────────────────────────
+  function initCardNav() {
+    document.querySelectorAll('.card[data-nav]').forEach(card => {
+      const dest = card.dataset.nav;
+      const handler = () => {
+        if (dest === 'vida_real') { window.open('vida_real.html','_blank'); return; }
+        navegarA(dest);
+      };
+      card.addEventListener('click', handler);
+      card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') handler(); });
+    });
+  }
 
-    // 4. NAVBAR (resaltar sección activa al hacer scroll) - Eliminado porque esta vista está en iframe
+  // ─── CTA BOTONES ─────────────────────────────────────────────────────────
+  function initCTAs() {
+    document.getElementById('btnEmpezar').addEventListener('click', () => navegarA('teoria'));
+    document.getElementById('btnPractica').addEventListener('click', () => navegarA('practica'));
+  }
 
-    // 5. EFECTO RIPPLE EN BOTONES CTA
+  // ─── RIPPLE EN BOTONES ───────────────────────────────────────────────────
+  function initRipple() {
     document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = btn.getBoundingClientRect();
-        ripple.style.cssText = `
-          position:absolute; border-radius:50%; width:0; height:0;
-          background:rgba(255,255,255,0.35); top:${e.clientY - rect.top}px;
-          left:${e.clientX - rect.left}px; transform:translate(-50%,-50%);
-          animation:rippleAnim 0.6s ease-out forwards; pointer-events:none;
-        `;
-        if (!btn.style.position) btn.style.position = 'relative';
-        btn.style.overflow = 'hidden';
-        btn.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 600);
+      btn.addEventListener('click', e => {
+        const r = document.createElement('span');
+        const rc = btn.getBoundingClientRect();
+        r.style.cssText = `position:absolute;border-radius:50%;width:0;height:0;
+          background:rgba(255,255,255,.32);
+          top:${e.clientY-rc.top}px;left:${e.clientX-rc.left}px;
+          transform:translate(-50%,-50%);
+          animation:rippleAnim .55s ease-out forwards;pointer-events:none;`;
+        btn.appendChild(r);
+        setTimeout(()=>r.remove(), 600);
       });
     });
+    const rs = document.createElement('style');
+    rs.textContent = '@keyframes rippleAnim{to{width:180px;height:180px;opacity:0}}';
+    document.head.appendChild(rs);
+  }
 
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-      @keyframes rippleAnim { to { width:200px; height:200px; opacity:0; } }
-    `;
-    document.head.appendChild(rippleStyle);
-
-    // Inicializar todo
+  // ─── INIT ────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    cargarDatosEstudiante();
     createParticles();
     drawNumberLine();
     initCardObserver();
-
-  </script>
+    initCardNav();
+    initCTAs();
+    initRipple();
+  });
+</script>
 
 </body>
 </html>
